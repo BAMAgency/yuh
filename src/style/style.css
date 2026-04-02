@@ -1,1 +1,44 @@
 @import "tailwindcss";
+
+@theme {
+    --color-yuh-rose: #FAB4CC;
+    --color-yuh-violet: #CCB1DA;
+    --color-yuh-pale-violet: #EBDDF5;
+    --color-yuh-purple: #BABDE4;
+    --color-yuh-blue: #6197AF;
+    --color-yuh-orange: #FA5B35;
+    --color-yuh-light-blue:#78C6E7;
+    --color-yuh-black: #151A21;
+
+    --font-display: "yuh-extrabold", sans-serif;
+    --font-body: "yuh-regular", sans-serif;
+    --font-medium: "yuh-semibold", sans-serif;
+
+
+}
+
+@font-face {
+    font-family: 'yuh-extrabold';
+    src: url('/fonts/proximasoft-extrabold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'yuh-regular';
+    src: url('/fonts/proximasoft-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'yuh-semibold';
+    src: url('/fonts/proximasoft-semibold.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+
