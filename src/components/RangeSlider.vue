@@ -1,5 +1,6 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
+import InfoTooltipButton from './InfoTooltipButton.vue'
 
 const props = defineProps({
   modelValue: {
@@ -37,7 +38,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
-const isInfoOpen = ref(false)
 
 const sliderBackground = computed(() => {
   const range = props.max - props.min
@@ -51,50 +51,15 @@ const sliderBackground = computed(() => {
 function onInput(event) {
   emit('update:modelValue', Number(event.target.value))
 }
-
-function toggleInfo() {
-  isInfoOpen.value = !isInfoOpen.value
-}
-
-function openInfo() {
-  isInfoOpen.value = true
-}
-
-function closeInfo() {
-  isInfoOpen.value = false
-}
 </script>
 
 <template>
   <div class="flex flex-col gap-3">
-    <div class="flex flex-row items-center gap-2 text-xl">
+    <div class="flex flex-row items-center gap-2 text-lg">
       <label :for="id">{{ label }}:</label>
       <div class="font-medium">{{ modelValue }}</div>
       <div class="ml-auto">
-        <div
-          v-if="info"
-          class="relative"
-        >
-          <button
-            type="button"
-            class="flex h-5 w-5 items-center justify-center rounded-full bg-yuh-pale-violet text-xs text-gray-700 hover:cursor-pointer"
-            :aria-expanded="isInfoOpen"
-            aria-label="Show information"
-            @click.stop="toggleInfo"
-            @mouseenter="openInfo"
-            @mouseleave="closeInfo"
-            @focus="openInfo"
-            @blur="closeInfo"
-          >
-            i
-          </button>
-          <div
-            v-show="isInfoOpen"
-            class="font-medium absolute bottom-full right-0 mb-2 w-max rounded-md bg-yuh-black p-2 text-xs text-white"
-          >
-            {{ info }}
-          </div>
-        </div>
+        <InfoTooltipButton v-if="info" :text="info" />
       </div>
     </div>
     <input
