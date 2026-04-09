@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import YouTubeThumbnail from './YouTubeThumbnail.vue'
 
 const isOpen = ref(false)
 
@@ -17,8 +18,8 @@ function toggle() {
       aria-controls="objective-help-panel"
       @click="toggle"
     >
-      <span>How to set an objective ?</span>
-      <span class="text-sm">{{ isOpen ? '^' : 'v' }}</span>
+      <span class="font-bold">How to set an objective ?</span>
+      <span class="text-sm font-bold">{{ isOpen ? '^' : 'v' }}</span>
     </button>
 
     <div v-if="isOpen" id="objective-help-panel" class="px-6 pb-5 text-left text-sm text-yuh-black font-medium">
@@ -31,6 +32,15 @@ function toggle() {
         <li>Major purchase: prepare for a car, studies, or a home project.</li>
         <li>Retirement: prioritize stability and long-term planning.</li>
       </ul>
+      <div class="mt-2">
+        <div class="mt-3">
+          <YouTubeThumbnail
+            video-id="h6bn-2tH-As"
+            title="How to set an objective"
+            href="https://www.youtube.com/watch?v=h6bn-2tH-As"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>

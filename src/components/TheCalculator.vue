@@ -4,7 +4,9 @@ import RangeSlider from './RangeSlider.vue'
 import YuhSelect from './YuhSelect.vue'
 import LearnMoreObjective from './LearnMoreObjective.vue'
 import HorizonSelector from './HorizonSelector.vue'
+import LearnMoreHorizon from './LearnMoreHorizon.vue'
 import RiskLevelSelector from './RiskLevelSelector.vue'
+import LearnMoreRiskLevel from './LearnMoreRiskLevel.vue'
 
 const index = ref(0);
 const ageInput = ref(25);
@@ -55,7 +57,7 @@ function goNext() {
         <RangeSlider v-model="currentInvestment" id="current-investment" name="current-investment"
           label="Current investment" :min="0" :max="100000" step="100"
           info="In CHF, how much have you already invested?" />
-        <RangeSlider v-model="debt" id="debt" name="debt" label="Debt" :min="0" :max="10000" step="100" />
+        <RangeSlider v-model="debt" id="debt" name="debt" label="Debt" :min="0" :max="100000" step="100" />
       </form>
     </div>
 
@@ -81,6 +83,7 @@ function goNext() {
       class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
        <form action="" class="flex flex-col gap-8">
          <HorizonSelector v-model="horizon" />
+         <LearnMoreHorizon />
        </form>
     </div>
 
@@ -89,6 +92,7 @@ function goNext() {
       class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
        <form action="" class="flex flex-col gap-8">
          <RiskLevelSelector v-model="riskLevel" />
+         <LearnMoreRiskLevel />
        </form>
     </div>
 
