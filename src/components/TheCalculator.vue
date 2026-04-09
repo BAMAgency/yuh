@@ -7,6 +7,7 @@ import HorizonSelector from './HorizonSelector.vue'
 import LearnMoreHorizon from './LearnMoreHorizon.vue'
 import RiskLevelSelector from './RiskLevelSelector.vue'
 import LearnMoreRiskLevel from './LearnMoreRiskLevel.vue'
+import TheExpenseSection from './TheExpenseSection.vue'
 
 const index = ref(0);
 const ageInput = ref(25);
@@ -16,11 +17,12 @@ const debt = ref(5000);
 const objective = ref('Invest');
 const horizon = ref('medium')
 const riskLevel = ref('balanced')
+const expenses = ref([])
 const MIN_AGE = 0
 const MAX_AGE = 100
 const MIN_INCOME = 0
 const MAX_INCOME = 20000
-const LAST_INDEX = 3
+const LAST_INDEX = 4
 
 const objectiveOptions = [
 
@@ -47,7 +49,7 @@ function goNext() {
 <template>
   <div class="flex flex-col items-center gap-12 mb-12">
 
-    <!-- Premières questions d'onboarding -->
+    <!-- Première section : l'onboarding -->
     <div v-if="index == 0"
       class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
       <form action="" class="flex flex-col gap-8">
@@ -61,7 +63,7 @@ function goNext() {
       </form>
     </div>
 
-    <!-- Deuxièmes questions : objectifs principaux -->
+    <!-- Deuxième section : objectifs principaux -->
     <div v-if="index == 1"
       class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
       <form action="" class="flex flex-col gap-8">
@@ -78,7 +80,7 @@ function goNext() {
     </div>
 
 
-    <!-- Troisèmes questions : horizon -->
+    <!-- Troisème section : horizon -->
     <div v-if="index == 2"
       class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
        <form action="" class="flex flex-col gap-8">
@@ -87,13 +89,21 @@ function goNext() {
        </form>
     </div>
 
-    <!-- Quatrièmes questions : risk level -->
+    <!-- Quatrième section : risk level -->
     <div v-if="index == 3"
       class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
        <form action="" class="flex flex-col gap-8">
          <RiskLevelSelector v-model="riskLevel" />
          <LearnMoreRiskLevel />
        </form>
+    </div>
+
+    <!--Cinquième section : les dépenses -->
+    <div v-if="index == 4" class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg" >
+        <form>
+          <TheExpenseSection v-model="expenses" />
+        </form>
+
     </div>
 
     <!-- Navigation buttons -->
