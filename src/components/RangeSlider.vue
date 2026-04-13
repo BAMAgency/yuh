@@ -55,7 +55,7 @@ function onInput(event) {
 
 <template>
   <div class="flex flex-col gap-3">
-    <div class="flex flex-row items-center gap-2 text-lg">
+    <div class="flex flex-row items-center gap-2 text-base">
       <label :for="id">{{ label }}:</label>
       <div class="font-medium">{{ modelValue }}</div>
       <div class="ml-auto">

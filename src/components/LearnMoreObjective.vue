@@ -16,7 +16,7 @@ function toggle() {
       :aria-expanded="isOpen" aria-controls="objective-help-panel" @click="toggle">
       <div class="flex w-full items-center gap-2">
         <span class="font-bold">How to set an objective ?</span>
-        <span class="ml-auto text-sm font-bold text-yuh-orange">YuhLearn {{ isOpen ? '^' : 'v' }}</span>
+        <span class="ml-auto text-sm font-bold text-yuh-orange">YuhLearn {{ isOpen ? 'x' : '+' }}</span>
       </div>
     </button>
 

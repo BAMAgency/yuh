@@ -12,17 +12,14 @@ import TheDashboard from './TheDashboard.vue'
 
 const index = ref(0);
 const ageInput = ref(25);
-const incomeInput = ref(5000);
-const currentInvestment = ref(10000);
-const debt = ref(5000);
+const incomeInput = ref(0);
+const currentInvestment = ref(0);
+const debt = ref(0);
+const save = ref(0);
 const objective = ref('Invest');
 const horizon = ref('medium')
 const riskLevel = ref('balanced')
 const expenses = shallowRef([])
-const MIN_AGE = 0
-const MAX_AGE = 100
-const MIN_INCOME = 0
-const MAX_INCOME = 20000
 const LAST_INDEX = 5
 
 const objectiveOptions = [
@@ -55,13 +52,22 @@ function goNext() {
     <div v-if="index == 0"
       class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
       <form action="" class="flex flex-col gap-8">
-        <RangeSlider v-model="ageInput" id="age" name="age" label="Age" :min="MIN_AGE" :max="MAX_AGE" />
-        <RangeSlider v-model="incomeInput" id="income" name="income" label="Monthly income" :min="MIN_INCOME"
-          :max="MAX_INCOME" step="100" info="In CHF, how much do you percieve monthly?" />
+
+        <RangeSlider v-model="ageInput" id="age" name="age" label="Age" :min="18" :max="75" step="1" />
+
+        <RangeSlider v-model="incomeInput" id="income" name="income" label="Monthly income" :min="0" :max="30000"
+          step="100" info="Gross monthly income in CHF" />
+
+        <RangeSlider v-model="save" id="save" name="save" label="Total savings" :min="0" :max="500000" step="1000"
+          info="How much cash savings do you currently have in CHF?" />
+
         <RangeSlider v-model="currentInvestment" id="current-investment" name="current-investment"
-          label="Current investment" :min="0" :max="100000" step="100"
-          info="In CHF, how much have you already invested?" />
-        <RangeSlider v-model="debt" id="debt" name="debt" label="Debt" :min="0" :max="100000" step="100" />
+          label="Total investment" :min="0" :max="100000" step="50"
+          info="Total value of your invested assets in CHF" />
+
+        <RangeSlider v-model="debt" id="debt" name="debt" label="Debt" :min="0" :max="1000000" step="1000"
+          info="Total outstanding debt in CHF" />
+
       </form>
     </div>
 
@@ -69,14 +75,8 @@ function goNext() {
     <div v-if="index == 1"
       class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
       <form action="" class="flex flex-col gap-8">
-        <YuhSelect
-          v-model="objective"
-          id="objective"
-          name="objective"
-          label="What is your main objective?"
-          info="Select the goal that best matches your current financial priority."
-          :options="objectiveOptions"
-        />
+        <YuhSelect v-model="objective" id="objective" name="objective" label="What is your main objective?"
+          info="Select the goal that best matches your current financial priority." :options="objectiveOptions" />
         <LearnMoreObjective />
       </form>
     </div>
@@ -85,32 +85,34 @@ function goNext() {
     <!-- Troisème section : horizon -->
     <div v-if="index == 2"
       class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
-       <form action="" class="flex flex-col gap-8">
-         <HorizonSelector v-model="horizon" />
-         <LearnMoreHorizon />
-       </form>
+      <form action="" class="flex flex-col gap-8">
+        <HorizonSelector v-model="horizon" />
+        <LearnMoreHorizon />
+      </form>
     </div>
 
     <!-- Quatrième section : risk level -->
     <div v-if="index == 3"
       class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
-       <form action="" class="flex flex-col gap-8">
-         <RiskLevelSelector v-model="riskLevel" />
-         <LearnMoreRiskLevel />
-       </form>
+      <form action="" class="flex flex-col gap-8">
+        <RiskLevelSelector v-model="riskLevel" />
+        <LearnMoreRiskLevel />
+      </form>
     </div>
 
     <!--Cinquième section : les dépenses -->
-    <div v-if="index == 4" class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg" >
-        <form>
-          <TheExpenseSection v-model="expenses" />
-        </form>
+    <div v-if="index == 4"
+      class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
+      <form>
+        <TheExpenseSection v-model="expenses" />
+      </form>
     </div>
 
     <!-- Sixième section : le résultat -->
     <div v-if="index == 5"
       class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
-      <TheDashboard :age="ageInput" :income="incomeInput" :currentInvestment="currentInvestment" :debt="debt" :objective="objective" :horizon="horizon" :riskLevel="riskLevel" :expenses="expenses"/>
+      <TheDashboard :age="ageInput" :income="incomeInput" :currentInvestment="currentInvestment" :debt="debt"
+        :objective="objective" :horizon="horizon" :riskLevel="riskLevel" :expenses="expenses" :save="save" />
     </div>
 
     <!-- Navigation buttons -->
