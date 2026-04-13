@@ -12,15 +12,12 @@ function toggle() {
 
 <template>
   <div class="rounded-2xl border-2 border-yuh-pale-violet">
-    <button
-      type="button"
-      class="flex w-full items-center justify-between px-6 py-4 text-yuh-black hover:cursor-pointer"
-      :aria-expanded="isOpen"
-      aria-controls="horizon-help-panel"
-      @click="toggle"
-    >
-      <span class="font-bold">How to choose your investment horizon?</span>
-      <span class="text-sm font-bold">{{ isOpen ? '^' : 'v' }}</span>
+    <button type="button" class="flex w-full items-center justify-between px-6 py-4 text-yuh-black hover:cursor-pointer"
+      :aria-expanded="isOpen" aria-controls="horizon-help-panel" @click="toggle">
+         <div class="flex w-full items-center gap-2">
+        <span class="font-bold">How to set an horizon ?</span>
+        <span class="ml-auto text-sm font-bold text-yuh-orange">YuhLearn {{ isOpen ? '^' : 'v' }}</span>
+      </div>
     </button>
 
     <div v-if="isOpen" id="horizon-help-panel" class="px-6 pb-5 text-left text-sm font-medium text-yuh-black">
@@ -35,15 +32,12 @@ function toggle() {
       <p class="mt-3">
         The longer your horizon, the more risk you may usually accept in exchange for growth potential.
       </p>
-        <div class="mt-2">
-            <div class="mt-3">
-            <YouTubeThumbnail
-                video-id="UTSsOaRJQs4"
-                title="How to choose your investment horizon?"
-                href="https://www.youtube.com/watch?v=UTSsOaRJQs4"
-            />
-            </div>
+      <div class="mt-2">
+        <div class="mt-3">
+          <YouTubeThumbnail video-id="UTSsOaRJQs4" title="How to choose your investment horizon?"
+            href="https://www.youtube.com/watch?v=UTSsOaRJQs4" />
         </div>
+      </div>
     </div>
 
   </div>

@@ -1,6 +1,14 @@
 <script setup>
+import { onMounted, ref } from 'vue';
 import NavBar from './components/NavBar.vue'
 import TheCalculator from './components/TheCalculator.vue'
+
+const isStarted = ref(false);
+
+onMounted(() => {
+  document.title = "Yuh Budget Calculator";
+})
+
 </script>
 
 
@@ -25,14 +33,16 @@ import TheCalculator from './components/TheCalculator.vue'
           Discover your budget, risk tolerance and investment horizon to get personalized recommendations.
         </div>
       </div>
-      <div class="mt-12">
-        <button>
+      <div v-if="!isStarted" class="mt-12">
+        <button @click="isStarted = true">
           <div class="flex flex-row items-center gap-2 bg-yuh-orange text-white rounded-full pl-6 pr-6 p-4 hover:bg-yuh-black hover:cursor-pointer">
             Start the calculator
           </div>
         </button>
       </div>
-      <TheCalculator />
+      <div v-if="isStarted">
+        <TheCalculator />
+      </div>
     </div>
 
     </div>

@@ -22,10 +22,9 @@ const MIN_AGE = 0
 const MAX_AGE = 100
 const MIN_INCOME = 0
 const MAX_INCOME = 20000
-const LAST_INDEX = 4
+const LAST_INDEX = 5
 
 const objectiveOptions = [
-
   'Save money',
   'Invest',
   'Prepare for a major purchase',
@@ -36,12 +35,14 @@ function goPrevious() {
   if (index.value > 0) {
     index.value -= 1
   }
+  console.log('expenses', expenses.value)
 }
 
 function goNext() {
   if (index.value < LAST_INDEX) {
     index.value += 1
   }
+  console.log('expenses', expenses.value)
 }
 
 </script>
@@ -103,7 +104,31 @@ function goNext() {
         <form>
           <TheExpenseSection v-model="expenses" />
         </form>
+    </div>
 
+    <!-- Sixième section : le résultat 
+      - revenus mensuels 
+      - dépenses mensuelles 
+      - reste disponible
+      - montant conseillé à garder en sécurité 
+      - montant conseillé à investir
+      - répartition conseillée du portefeuille
+      - signalement en cas de problème (ex: si le reste disponible est négatif, si certaines dépenses dépassent les recommandations, etc.)
+      - proposition d'analyse avec l'agent IA si besoin
+    -->
+    <div v-if="index == 5"
+      class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
+      <p class="text-2xl font-bold">Your personalized investment plan is ready!</p>
+      <p class="mt-4 text-lg">Based on your inputs, we recommend the following portfolio allocation:</p>
+      <!-- Placeholder for the actual recommendation -->
+      <div class="mt-8 rounded-xl bg-yuh-purple/20 p-6">
+        <p class="text-xl font-medium">Recommended Portfolio:</p>
+        <ul class="mt-4 text-left list-disc list-inside">
+          <li>60% Stocks</li>
+          <li>30% Bonds</li>
+          <li>10% Cash</li>
+        </ul>
+      </div>
     </div>
 
     <!-- Navigation buttons -->

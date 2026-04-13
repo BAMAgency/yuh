@@ -6,23 +6,42 @@ const props = defineProps({
   }
 })
 
+const pimentPath = '/assets/piment.svg'
+const pimentBlankPath = '/assets/piment_blank.svg'
+
+
 const emit = defineEmits(['update:modelValue'])
 
 const riskOptions = [
   {
-    value: 'prudent',
-    label: 'Prudent',
+    value: 'Mild',
+    label: 'Mild',
+    pimentLevel: 1,
     description: 'Lower risk, more stability, and smoother ups and downs.'
   },
   {
-    value: 'balanced',
-    label: 'Balanced',
+    value: 'Tasty',
+    label: 'Tasty',
+    pimentLevel: 2,
     description: 'A middle ground between growth and protection.'
   },
   {
-    value: 'dynamic',
-    label: 'Dynamic',
+    value: 'Spicy',
+    label: 'Spicy',
+    pimentLevel: 4,
     description: 'Higher risk, higher potential growth, and more volatility.'
+  },
+  {
+    value: 'Hot',
+    label: 'Hot',
+    pimentLevel: 5,
+    description: 'A mix of growth and stability for a well-rounded portfolio.'
+  },
+  {
+    value: 'Extra Hot',
+    label: 'Extra Hot',
+    pimentLevel: 6,
+    description: 'A blend of growth and stability for a well-rounded portfolio.'
   }
 ]
 
@@ -48,7 +67,16 @@ function selectRiskLevel(value) {
         :aria-pressed="modelValue === option.value"
         @click="selectRiskLevel(option.value)"
       >
-        <p class="text-lg">{{ option.label }}</p>
+      <div class="flex flex-row gap-2 items-center">
+           <p class="text-lg">{{ option.label }}</p>
+        <div>
+          <span class="text-yuh-orange font-bold">
+            <img :src="pimentPath" :alt="`${option.pimentLevel} piments`" class="inline-block h-4 w-4" v-for="n in option.pimentLevel" :key="n" />
+            <img :src="pimentBlankPath" :alt="`${option.pimentLevel} piments`" class="inline-block h-4 w-4" v-for="n in (6 - option.pimentLevel)" :key="n" />
+          </span>
+        </div>
+      </div>
+     
         <p class="mt-2 text-sm font-medium text-yuh-black">{{ option.description }}</p>
       </button>
     </div>

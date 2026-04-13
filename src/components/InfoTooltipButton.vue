@@ -27,7 +27,7 @@ function close() {
   <div class="relative">
     <button
       type="button"
-      class="flex h-5 w-5 items-center justify-center rounded-full bg-yuh-pale-violet text-xs text-gray-700 hover:cursor-pointer"
+      class="flex h-5 w-5 items-center justify-center rounded-full border-2 border-yuh-black text-xs text-yuh-black hover:cursor-pointer hover:bg-yuh-purple"
       :aria-expanded="isOpen"
       aria-label="Show information"
       @click.stop="toggle"
