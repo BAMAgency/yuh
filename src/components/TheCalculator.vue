@@ -1,21 +1,21 @@
 <script setup>
 import { ref, shallowRef } from 'vue'
-import RangeSlider from './RangeSlider.vue'
+import RangeSlider from './core/RangeSlider.vue'
 import YuhSelect from './YuhSelect.vue'
-import LearnMoreObjective from './LearnMoreObjective.vue'
+import LearnMoreObjective from './learnmoreSections/LearnMoreObjective.vue'
 import HorizonSelector from './HorizonSelector.vue'
-import LearnMoreHorizon from './LearnMoreHorizon.vue'
+import LearnMoreHorizon from './learnmoreSections/LearnMoreHorizon.vue'
 import RiskLevelSelector from './RiskLevelSelector.vue'
-import LearnMoreRiskLevel from './LearnMoreRiskLevel.vue'
+import LearnMoreRiskLevel from './learnmoreSections/LearnMoreRiskLevel.vue'
 import TheExpenseSection from './TheExpenseSection.vue'
 import TheDashboard from './TheDashboard.vue'
 
 const index = ref(0);
 const ageInput = ref(25);
-const incomeInput = ref(0);
-const currentInvestment = ref(0);
-const debt = ref(0);
-const save = ref(0);
+const incomeInput = ref(5000);
+const currentInvestment = ref(1000);
+const debt = ref(500);
+const save = ref(10000);
 const objective = ref('Invest');
 const horizon = ref('medium')
 const riskLevel = ref('balanced')
