@@ -9,6 +9,7 @@ import RiskLevelSelector from './RiskLevelSelector.vue'
 import LearnMoreRiskLevel from './learnmoreSections/LearnMoreRiskLevel.vue'
 import TheExpenseSection from './TheExpenseSection.vue'
 import TheDashboard from './TheDashboard.vue'
+import InfoTooltipButton from './core/InfoTooltipButton.vue'
 
 const index = ref(0);
 const ageInput = ref(25);
@@ -18,8 +19,9 @@ const debt = ref(500);
 const save = ref(10000);
 const objective = ref('Invest');
 const horizon = ref('medium')
-const riskLevel = ref('balanced')
+const riskLevel = ref('Mild')
 const expenses = shallowRef([])
+const highInterestDebt = ref(false);
 const LAST_INDEX = 5
 
 const objectiveOptions = [
@@ -62,11 +64,20 @@ function goNext() {
           info="How much cash savings do you currently have in CHF?" />
 
         <RangeSlider v-model="currentInvestment" id="current-investment" name="current-investment"
-          label="Total investment" :min="0" :max="100000" step="50"
-          info="Total value of your invested assets in CHF" />
+          label="Total investment" :min="0" :max="100000" step="50" info="Total value of your invested assets in CHF" />
 
-        <RangeSlider v-model="debt" id="debt" name="debt" label="Debt" :min="0" :max="1000000" step="1000"
+        <RangeSlider v-model="debt" id="debt" name="debt" label="Total debt" :min="0" :max="1000000" step="1000"
           info="Total outstanding debt in CHF" />
+
+        <label for="high-interest-debt"
+          class="flex items-start gap-3 text-left text-sm text-yuh-black/70 hover:cursor-pointer">
+          <input id="high-interest-debt" name="high-interest-debt" type="checkbox" v-model="highInterestDebt"
+            class="mt-1 h-5 w-5 rounded border-yuh-purple text-yuh-orange focus:ring-yuh-orange" />
+          <span>I have high interest debt (e.g. credit card debt)</span>
+          <InfoTooltipButton
+            text="High interest debt can significantly impact your financial health. If you have high interest debt, it's often advisable to prioritize paying it off before investing, as the interest on such debt can outweigh potential investment returns.">
+          </InfoTooltipButton>
+        </label>
 
       </form>
     </div>
@@ -112,7 +123,8 @@ function goNext() {
     <div v-if="index == 5"
       class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
       <TheDashboard :age="ageInput" :income="incomeInput" :currentInvestment="currentInvestment" :debt="debt"
-        :objective="objective" :horizon="horizon" :riskLevel="riskLevel" :expenses="expenses" :save="save" />
+        :objective="objective" :horizon="horizon" :riskLevel="riskLevel" :expenses="expenses" :save="save"
+        :highInterestDebt="highInterestDebt" />
     </div>
 
     <!-- Navigation buttons -->

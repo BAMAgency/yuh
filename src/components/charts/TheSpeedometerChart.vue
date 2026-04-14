@@ -26,9 +26,9 @@ const clampedValue = computed(() => {
 })
 
 const gaugeColor = computed(() => {
-  if (clampedValue.value >= 70) return 'rgb(250, 180, 204)'
-  if (clampedValue.value >= 40) return 'rgb(120, 198, 231)'
-  return 'rgb(250, 91, 53)'
+  if (clampedValue.value >= 70) return '#6197AF'
+  if (clampedValue.value >= 40) return '#CCB1DA'
+  return '#FA5B35'
 })
 
 function createChart() {
@@ -42,7 +42,7 @@ function createChart() {
       datasets: [
         {
           data: [clampedValue.value, 100 - clampedValue.value],
-          backgroundColor: [gaugeColor.value, 'rgb(234, 234, 234)'],
+          backgroundColor: [gaugeColor.value, '#EBDDF5'],
           borderWidth: 0,
           cutout: '72%'
         }
@@ -74,7 +74,7 @@ stopChartWatch = watch([clampedValue, gaugeColor], () => {
   }
 
   chartInstance.data.datasets[0].data = [clampedValue.value, 100 - clampedValue.value]
-  chartInstance.data.datasets[0].backgroundColor = [gaugeColor.value, 'rgb(234, 234, 234)']
+  chartInstance.data.datasets[0].backgroundColor = [gaugeColor.value, '#EBDDF5']
   chartInstance.update()
 })
 
@@ -96,7 +96,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="w-full max-w-sm">
+  <div class="w-full max-w-sm rounded-xl border border-yuh-pale-violet p-4">
     <div class="relative h-44 w-full">
       <canvas ref="canvasRef"></canvas>
       <div class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center pt-9 text-center">

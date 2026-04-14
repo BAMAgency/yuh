@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import TheSpeedometerChart from './charts/TheSpeedometerChart.vue'
 import TheExpensesDonut from './charts/TheExpensesDonut.vue'
+import TheInvestmentDonut from './charts/TheInvestmentDonut.vue'
 
 const props = defineProps({
     age: Number,
@@ -13,9 +14,12 @@ const props = defineProps({
     riskLevel: String,
     expenses: Array,
     save: Number,
+    highInterestDebt: Boolean,
 })
 
 const isOpen = ref(false);
+// const isMonthlyExpensesDetailsOpen = ref(false);
+// const isFinancialHealthDetailsOpen = ref(false);
 
 const safeIncome = computed(() => Number(props.income) || 0)
 const safeDebt = computed(() => Number(props.debt) || 0)
@@ -98,48 +102,94 @@ const financialHealth = computed(() => {
       - revenus mensuels -> fait
       - dépenses mensuelles -> fait
       - reste disponible -> fait 
-      - montant conseillé à garder en sécurité 
-      - montant conseillé à investir
-      - répartition conseillée du portefeuille
+      - montant conseillé à garder en sécurité -> fait
+      - montant conseillé à investir -> fait
+      - répartition conseillée du portefeuille -> fait
       - signalement en cas de problème (ex: si le reste disponible est négatif, si certaines dépenses dépassent les recommandations, etc.)
-      - proposition d'analyse avec l'agent IA si bsesoin
+      - proposition d'analyse avec l'agent IA si bsesoin -> fait
+      - possibilité d'exporter les résultats et les recommandations -> à faire
     -->
 
-    <div class="flex flex-col gap-12 items-center">
-        <div class="flex flex-row items-start gap-2 align-middle">
-            <p class="text-4xl text-yuh-violet">{{ getLeftAmount() }} CHF</p>
+    <div class="flex flex-col gap-4 items-center">
 
-            <div class="flex flex-col items-start">
-                <div>
-                    <h1 class="text-xl">Left amount</h1>
+        <h1 class="font-bold text-4xl text-yuh-rose mb-6">
+            Your financial at a glance
+        </h1>
+        <!-- Left Amount -->
+        <div id="left-amount"
+            class="w-full lg:min-w-xl flex flex-col gap-4 rounded-xl border border-yuh-purple p-4 text-left">
+            <div class="grid items-center gap-4 md:grid-cols-[auto_1fr] ">
+                <p class="text-4xl font-bold leading-none text-yuh-violet md:text-5xl">
+                    {{ getLeftAmount() }} CHF
+                </p>
+                <div class="flex flex-col gap-1">
+                    <h1 class="text-2xl font-semibold text-yuh-black md:text-3xl">Left amount</h1>
+                    <p class="text-sm font-medium text-yuh-black/70 md:text-base">
+                        What's left after expenses each month
+                    </p>
                 </div>
-                <div>
-                    <p class="text-md text-yuh-black font-medium text-left">What's left after expenses each month</p>
-                </div>
-                <div>
-                    <button @click="isOpen = !isOpen"
-                        class="text-sm text-yuh-orange hover:text-yuh-black transition-colors mb-2">
-                        {{ isOpen ? 'Show less' : 'Show expenses details' }}
-                    </button>
-                </div>
-                <div v-show="isOpen">
-                    <TheExpensesDonut :expenses="expenses" />
-                </div>
+            </div>
+            <div>
+                <button @click="isOpen = !isOpen"
+                    class="text-sm text-yuh-orange hover:text-yuh-black transition-colors mb-2">
+                    {{ isOpen ? '- Show less' : '+ Show expenses details' }}
+                </button>
+            </div>
+            <div v-show="isOpen">
+                <TheExpensesDonut :expenses="expenses" :income="income" />
             </div>
         </div>
 
-        <div class="mt-6 flex flex-col gap-6">
-            <h1 class="text-xl">Financial health</h1>
+        <!--Months of security
+        <div class="w-full lg:min-w-xl flex flex-col gap-4 rounded-xl border border-yuh-purple p-4 text-left">
+            <div class="grid items-center gap-4 md:grid-cols-[auto_1fr] ">
+                <p class="text-4xl font-bold leading-none text-yuh-violet md:text-5xl">
+                    {{ monthSecurityAmount }} months
+                </p>
+                <div class="flex flex-col gap-1">
+                    <h1 class="text-2xl font-semibold text-yuh-black md:text-3xl">Months of security</h1>
+                    <p class="text-sm font-medium text-yuh-black/70 md:text-base">
+                        How long your savings can cover your monthly expenses
+                    </p>
+                </div>
+            </div>
+            <div class="w-full">
+                <button @click="isMonthlyExpensesDetailsOpen = !isMonthlyExpensesDetailsOpen"
+                    class="mb-2 text-sm text-yuh-orange transition-colors hover:text-yuh-black">
+                    {{ isMonthlyExpensesDetailsOpen ? '- Show less' : '+ What does that result mean?' }}
+                </button>
+            </div>
+            <div v-show="isMonthlyExpensesDetailsOpen" class="w-full text-left">
+                <p class="text-sm text-yuh-black/70">This is calculated by dividing your total savings by your total
+                    monthly expenses. It indicates how many months you could cover your expenses using only your
+                    savings, without any additional income.</p>
+            </div>
+        </div>-->
+
+        <!--Financial Health index
+        <div
+            class="w-full flex flex-col items-center gap-2 rounded-xl border border-yuh-purple p-4 text-center lg:min-w-xl">
+            <h1 class="text-4xl">Financial health Index</h1>
             <TheSpeedometerChart :value="financialHealth" label="Financial health" />
-            <p class="text-md text-yuh-black font-medium text-center">Financial health score based on income, expenses,
+            <p class="text-sm text-yuh-black font-medium text-center">Financial health score based on income,
+                expenses,<br />
                 debt, savings and investments</p>
-        </div>
-        <div class="flex flex-col gap-2">
-            <h1 class="text-xl">Months of security</h1>
-            <p class="text-md text-yuh-black font-medium">Months covered by security amount.
-            </p>
-            <p class="text-2xl text-yuh-violet">{{ monthSecurityAmount }}</p>
-        </div>
+
+            <div class="w-full text-left">
+                <button @click="isFinancialHealthDetailsOpen = !isFinancialHealthDetailsOpen"
+                    class="mb-2 text-sm text-yuh-orange transition-colors hover:text-yuh-black">
+                    {{ isFinancialHealthDetailsOpen ? '- Show less' : '+ What is that index?' }}
+                </button>
+            </div>
+            <div v-show="isFinancialHealthDetailsOpen" class="w-full text-left">
+                <p class="text-sm text-yuh-black/70">This index provides a comprehensive view of your financial
+                    well-being by evaluating key aspects of your financial situation.</p>
+            </div>
+        </div>-->
+
+        <!--The investment recommandations chart-->
+        <TheInvestmentDonut :left="leftAmount" :debt="debt" :riskLevel="riskLevel" :objective="objective"
+            :horizon="horizon" :highInterestDebt="highInterestDebt" :save="save" :monthlyExpenses="totalExpenses" />
     </div>
 </template>
 

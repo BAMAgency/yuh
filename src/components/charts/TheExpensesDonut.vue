@@ -6,6 +6,10 @@ const props = defineProps({
     expenses: {
         type: Array,
         default: () => []
+    },
+    income: {
+        type: Number,
+        default: 0
     }
 })
 
@@ -13,7 +17,9 @@ const palette = ['#FAB4CC', '#CCB1DA', '#EBDDF5', '#BABDE4', '#6197AF', '#FA5B35
 const canvasRef = ref(null)
 let chartInstance = null
 let stopChartWatch = null
-
+const totalExpenses = computed(() =>
+    (props.expenses || []).reduce((total, expense) => total + (Number(expense.amount) || 0), 0)
+)
 function formatCategory(category) {
     const text = String(category || '').replace(/_/g, ' ').trim()
     if (!text) {
@@ -137,35 +143,55 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="w-full max-w-md rounded-xl border border-yuh-pale-violet p-4">
+    <div class="w-full max-w-4xl rounded-xl">
         <p class="mb-3 text-left text-base font-semibold text-yuh-black">Expense breakdown</p>
 
         <div v-if="details.length === 0" class="text-left text-sm text-yuh-black/70">
             Add at least one expense with an amount greater than 0 to display the chart.
         </div>
 
-        <div v-else class="grid gap-4 md:grid-cols-[180px_1fr] md:items-center">
-            <div class="h-44 w-full">
+        <div v-else class="flex flex-col gap-4">
+            <div class="mx-auto h-64 w-full max-w-sm md:h-52 md:max-w-xs">
                 <canvas ref="canvasRef"></canvas>
             </div>
-
-            <ul class="space-y-2 text-sm">
-                <li v-for="item in details" :key="item.key" class="flex items-center justify-between gap-2">
-                    <div class="flex items-center gap-2">
-                        <span class="inline-block h-3 w-3 rounded-full" :style="{ backgroundColor: item.color }"></span>
-                        <span class="text-yuh-black">{{ item.label }}</span>
+            <div class="mb-2 text-sm">
+                <div class="text-left">
+                    <div id="left-calcul" class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-2">
+                        <div class="rounded-md bg-yuh-pale-violet p-3 text-center">
+                            <p class="text-xs font-semibold uppercase tracking-wide text-yuh-black/60">Income</p>
+                            <p class="text-base font-bold text-yuh-black">CHF {{ Number(income || 0).toLocaleString() }}
+                            </p>
+                        </div>
+                        <div class="rounded-md bg-yuh-pale-violet p-3 text-center">
+                            <p class="text-xs font-semibold uppercase tracking-wide text-yuh-black/60">Total expenses</p>
+                            <p class="text-base font-bold text-yuh-black">CHF {{ Number(totalExpenses || 0).toLocaleString() }}
+                            </p>
+                        </div>
                     </div>
-                    <span class="font-medium text-yuh-black/80">CHF {{ item.amount.toLocaleString() }} ({{
-                        item.percentage }}%)</span>
-                </li>
-            </ul>
+                </div>
+
+                <ul class="space-y-2">
+                    <li v-for="item in details" :key="item.key" class="flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="inline-block h-3 w-3 rounded-full"
+                                :style="{ backgroundColor: item.color }"></span>
+                            <span class="text-yuh-black">{{ item.label }}</span>
+                        </div>
+                        <span class="font-medium text-yuh-black/80">CHF {{ item.amount.toLocaleString() }} ({{
+                            item.percentage }}%)</span>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="font-medium text-sm flex flex-col items-start gap-2 mt-8">
             <h3 class="font-bold text-md">Are your expenses well balanced?</h3>
             <p class="text-left">
-                In our app, you can get personalised recommendations on how to optimize your expenses and save more each month, based on your financial situation and goals.
+                In our app, you can get <span class="font-bold">personalised recommendations</span>  on how to optimize your expenses and save more each
+                month, <span class="font-bold">based on your financial situation and goals</span>.
             </p>
-            <a href="https://www.yuh.com/fr/" class="text-yuh-orange hover:text-yuh-black transition-colors">Try it out now !</a>
+            <a href="https://www.yuh.com/fr/"
+                class="text-yuh-orange hover:text-yuh-black transition-colors font-bold">Try it out
+                now !</a>
         </div>
     </div>
 </template>
