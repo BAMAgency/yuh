@@ -48,11 +48,11 @@ function goNext() {
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-12 mb-12">
+  <div class="flex flex-col items-center gap-12 mb-12 rounded-xl bg-white shadow-xl p-12">
 
     <!-- Première section : l'onboarding -->
     <div v-if="index == 0"
-      class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
+      class="lg:min-w-xl md:min-w-md sm:min-w-sm text-center text-sm md:text-base lg:text-lg">
       <form action="" class="flex flex-col gap-8">
 
         <RangeSlider v-model="ageInput" id="age" name="age" label="Age" :min="18" :max="75" step="1" />
@@ -84,7 +84,7 @@ function goNext() {
 
     <!-- Deuxième section : objectifs principaux -->
     <div v-if="index == 1"
-      class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
+      class=" bg-white lg:min-w-xl md:min-w-md sm:min-w-sm  text-center text-sm md:text-base lg:text-lg">
       <form action="" class="flex flex-col gap-8">
         <YuhSelect v-model="objective" id="objective" name="objective" label="What is your main objective?"
           info="Select the goal that best matches your current financial priority." :options="objectiveOptions" />
@@ -95,7 +95,7 @@ function goNext() {
 
     <!-- Troisème section : horizon -->
     <div v-if="index == 2"
-      class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
+      class=" bg-white lg:min-w-xl md:min-w-md sm:min-w-sm text-center text-sm md:text-base lg:text-lg">
       <form action="" class="flex flex-col gap-8">
         <HorizonSelector v-model="horizon" />
         <LearnMoreHorizon />
@@ -104,7 +104,7 @@ function goNext() {
 
     <!-- Quatrième section : risk level -->
     <div v-if="index == 3"
-      class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
+      class=" bg-white lg:min-w-xl md:min-w-md sm:min-w-sm text-center text-sm md:text-base lg:text-lg">
       <form action="" class="flex flex-col gap-8">
         <RiskLevelSelector v-model="riskLevel" />
         <LearnMoreRiskLevel />
@@ -113,7 +113,7 @@ function goNext() {
 
     <!--Cinquième section : les dépenses -->
     <div v-if="index == 4"
-      class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
+      class=" bg-white lg:min-w-xl md:min-w-md sm:min-w-sm  text-center text-sm md:text-base lg:text-lg">
       <form>
         <TheExpenseSection v-model="expenses" />
       </form>
@@ -121,7 +121,7 @@ function goNext() {
 
     <!-- Sixième section : le résultat -->
     <div v-if="index == 5"
-      class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
+      class=" bg-white lg:min-w-xl md:min-w-md sm:min-w-sm text-center text-sm md:text-base lg:text-lg p-2">
       <TheDashboard :age="ageInput" :income="incomeInput" :currentInvestment="currentInvestment" :debt="debt"
         :objective="objective" :horizon="horizon" :riskLevel="riskLevel" :expenses="expenses" :save="save"
         :highInterestDebt="highInterestDebt" />
@@ -131,13 +131,13 @@ function goNext() {
     <div class="flex flex-row gap-12">
       <button v-if="index > 0" type="button" @click="goPrevious" :disabled="index === 0">
         <div
-          class="flex flex-row items-center gap-2 pl-4 pr-4 p-4 text-yuh-orange hover:text-yuh-black hover:cursor-pointer">
-          < Previous </div>
+          class="flex flex-row items-center gap-2 pl-4 pr-4 p-4 bg-yuh-orange text-white rounded-4xl hover:bg-yuh-orange/90 hover:cursor-pointer">
+          <  Previous </div>
       </button>
       <button v-if="index < LAST_INDEX" type="button" @click="goNext" :disabled="index >= LAST_INDEX">
         <div
-          class="flex flex-row items-center gap-2 text-yuh-orange hover:text-yuh-black rounded-full pl-4 pr-4 p-4  hover:cursor-pointer">
-          Next >
+          class="flex flex-row items-center gap-2 bg-yuh-orange text-white hover:bg-yuh-orange/90 rounded-4xl pl-4 pr-4 p-4  hover:cursor-pointer">
+          Next  >
         </div>
       </button>
     </div>

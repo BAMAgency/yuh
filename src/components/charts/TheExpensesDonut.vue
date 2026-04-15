@@ -184,7 +184,7 @@ onBeforeUnmount(() => {
             </div>
         </div>
         <div class="font-medium text-sm flex flex-col items-start gap-2 mt-8">
-            <h3 class="font-bold text-md">Are your expenses well balanced?</h3>
+            <h3 class="font-bold text-base">Are your expenses well balanced?</h3>
             <p class="text-left">
                 In our app, you can get <span class="font-bold">personalised recommendations</span>  on how to optimize your expenses and save more each
                 month, <span class="font-bold">based on your financial situation and goals</span>.
