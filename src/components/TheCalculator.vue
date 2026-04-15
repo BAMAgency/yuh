@@ -1,27 +1,27 @@
 <script setup>
-import { ref } from 'vue'
-import RangeSlider from './RangeSlider.vue'
+import { ref, shallowRef } from 'vue'
+import RangeSlider from './core/RangeSlider.vue'
 import YuhSelect from './YuhSelect.vue'
-import LearnMoreObjective from './LearnMoreObjective.vue'
+import LearnMoreObjective from './learnmoreSections/LearnMoreObjective.vue'
 import HorizonSelector from './HorizonSelector.vue'
-import LearnMoreHorizon from './LearnMoreHorizon.vue'
+import LearnMoreHorizon from './learnmoreSections/LearnMoreHorizon.vue'
 import RiskLevelSelector from './RiskLevelSelector.vue'
-import LearnMoreRiskLevel from './LearnMoreRiskLevel.vue'
+import LearnMoreRiskLevel from './learnmoreSections/LearnMoreRiskLevel.vue'
 import TheExpenseSection from './TheExpenseSection.vue'
+import TheDashboard from './TheDashboard.vue'
+import InfoTooltipButton from './core/InfoTooltipButton.vue'
 
 const index = ref(0);
 const ageInput = ref(25);
 const incomeInput = ref(5000);
-const currentInvestment = ref(10000);
-const debt = ref(5000);
+const currentInvestment = ref(1000);
+const debt = ref(500);
+const save = ref(10000);
 const objective = ref('Invest');
 const horizon = ref('medium')
-const riskLevel = ref('balanced')
-const expenses = ref([])
-const MIN_AGE = 0
-const MAX_AGE = 100
-const MIN_INCOME = 0
-const MAX_INCOME = 20000
+const riskLevel = ref('Mild')
+const expenses = shallowRef([])
+const highInterestDebt = ref(false);
 const LAST_INDEX = 5
 
 const objectiveOptions = [
@@ -48,34 +48,46 @@ function goNext() {
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-12 mb-12">
+  <div class="flex flex-col items-center gap-12 mb-12 rounded-xl bg-white shadow-xl p-12">
 
     <!-- Première section : l'onboarding -->
     <div v-if="index == 0"
-      class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
+      class="lg:min-w-xl md:min-w-md sm:min-w-sm text-center text-sm md:text-base lg:text-lg">
       <form action="" class="flex flex-col gap-8">
-        <RangeSlider v-model="ageInput" id="age" name="age" label="Age" :min="MIN_AGE" :max="MAX_AGE" />
-        <RangeSlider v-model="incomeInput" id="income" name="income" label="Monthly income" :min="MIN_INCOME"
-          :max="MAX_INCOME" step="100" info="In CHF, how much do you percieve monthly?" />
+
+        <RangeSlider v-model="ageInput" id="age" name="age" label="Age" :min="18" :max="75" step="1" />
+
+        <RangeSlider v-model="incomeInput" id="income" name="income" label="Monthly income" :min="0" :max="30000"
+          step="100" info="Gross monthly income in CHF" />
+
+        <RangeSlider v-model="save" id="save" name="save" label="Total savings" :min="0" :max="500000" step="1000"
+          info="How much cash savings do you currently have in CHF?" />
+
         <RangeSlider v-model="currentInvestment" id="current-investment" name="current-investment"
-          label="Current investment" :min="0" :max="100000" step="100"
-          info="In CHF, how much have you already invested?" />
-        <RangeSlider v-model="debt" id="debt" name="debt" label="Debt" :min="0" :max="100000" step="100" />
+          label="Total investment" :min="0" :max="100000" step="50" info="Total value of your invested assets in CHF" />
+
+        <RangeSlider v-model="debt" id="debt" name="debt" label="Total debt" :min="0" :max="1000000" step="1000"
+          info="Total outstanding debt in CHF" />
+
+        <label for="high-interest-debt"
+          class="flex items-start gap-3 text-left text-sm text-yuh-black/70 hover:cursor-pointer">
+          <input id="high-interest-debt" name="high-interest-debt" type="checkbox" v-model="highInterestDebt"
+            class="mt-1 h-5 w-5 rounded border-yuh-purple text-yuh-orange focus:ring-yuh-orange" />
+          <span>I have high interest debt (e.g. credit card debt)</span>
+          <InfoTooltipButton
+            text="High interest debt can significantly impact your financial health. If you have high interest debt, it's often advisable to prioritize paying it off before investing, as the interest on such debt can outweigh potential investment returns.">
+          </InfoTooltipButton>
+        </label>
+
       </form>
     </div>
 
     <!-- Deuxième section : objectifs principaux -->
     <div v-if="index == 1"
-      class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
+      class=" bg-white lg:min-w-xl md:min-w-md sm:min-w-sm  text-center text-sm md:text-base lg:text-lg">
       <form action="" class="flex flex-col gap-8">
-        <YuhSelect
-          v-model="objective"
-          id="objective"
-          name="objective"
-          label="What is your main objective?"
-          info="Select the goal that best matches your current financial priority."
-          :options="objectiveOptions"
-        />
+        <YuhSelect v-model="objective" id="objective" name="objective" label="What is your main objective?"
+          info="Select the goal that best matches your current financial priority." :options="objectiveOptions" />
         <LearnMoreObjective />
       </form>
     </div>
@@ -83,65 +95,49 @@ function goNext() {
 
     <!-- Troisème section : horizon -->
     <div v-if="index == 2"
-      class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
-       <form action="" class="flex flex-col gap-8">
-         <HorizonSelector v-model="horizon" />
-         <LearnMoreHorizon />
-       </form>
+      class=" bg-white lg:min-w-xl md:min-w-md sm:min-w-sm text-center text-sm md:text-base lg:text-lg">
+      <form action="" class="flex flex-col gap-8">
+        <HorizonSelector v-model="horizon" />
+        <LearnMoreHorizon />
+      </form>
     </div>
 
     <!-- Quatrième section : risk level -->
     <div v-if="index == 3"
-      class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
-       <form action="" class="flex flex-col gap-8">
-         <RiskLevelSelector v-model="riskLevel" />
-         <LearnMoreRiskLevel />
-       </form>
+      class=" bg-white lg:min-w-xl md:min-w-md sm:min-w-sm text-center text-sm md:text-base lg:text-lg">
+      <form action="" class="flex flex-col gap-8">
+        <RiskLevelSelector v-model="riskLevel" />
+        <LearnMoreRiskLevel />
+      </form>
     </div>
 
     <!--Cinquième section : les dépenses -->
-    <div v-if="index == 4" class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg" >
-        <form>
-          <TheExpenseSection v-model="expenses" />
-        </form>
+    <div v-if="index == 4"
+      class=" bg-white lg:min-w-xl md:min-w-md sm:min-w-sm  text-center text-sm md:text-base lg:text-lg">
+      <form>
+        <TheExpenseSection v-model="expenses" />
+      </form>
     </div>
 
-    <!-- Sixième section : le résultat 
-      - revenus mensuels 
-      - dépenses mensuelles 
-      - reste disponible
-      - montant conseillé à garder en sécurité 
-      - montant conseillé à investir
-      - répartition conseillée du portefeuille
-      - signalement en cas de problème (ex: si le reste disponible est négatif, si certaines dépenses dépassent les recommandations, etc.)
-      - proposition d'analyse avec l'agent IA si besoin
-    -->
+    <!-- Sixième section : le résultat -->
     <div v-if="index == 5"
-      class="rounded-xl bg-white lg:min-w-xl md:min-w-md sm:min-w-sm sm:rounded-xl p-12 shadow-xl text-center text-sm md:text-base lg:text-lg">
-      <p class="text-2xl font-bold">Your personalized investment plan is ready!</p>
-      <p class="mt-4 text-lg">Based on your inputs, we recommend the following portfolio allocation:</p>
-      <!-- Placeholder for the actual recommendation -->
-      <div class="mt-8 rounded-xl bg-yuh-purple/20 p-6">
-        <p class="text-xl font-medium">Recommended Portfolio:</p>
-        <ul class="mt-4 text-left list-disc list-inside">
-          <li>60% Stocks</li>
-          <li>30% Bonds</li>
-          <li>10% Cash</li>
-        </ul>
-      </div>
+      class=" bg-white lg:min-w-xl md:min-w-md sm:min-w-sm text-center text-sm md:text-base lg:text-lg p-2">
+      <TheDashboard :age="ageInput" :income="incomeInput" :currentInvestment="currentInvestment" :debt="debt"
+        :objective="objective" :horizon="horizon" :riskLevel="riskLevel" :expenses="expenses" :save="save"
+        :highInterestDebt="highInterestDebt" />
     </div>
 
     <!-- Navigation buttons -->
     <div class="flex flex-row gap-12">
       <button v-if="index > 0" type="button" @click="goPrevious" :disabled="index === 0">
         <div
-          class="flex flex-row items-center gap-2 pl-4 pr-4 p-4 text-yuh-orange hover:text-yuh-black hover:cursor-pointer">
-          < Previous </div>
+          class="flex flex-row items-center gap-2 pl-4 pr-4 p-4 bg-yuh-orange text-white rounded-4xl hover:bg-yuh-orange/90 hover:cursor-pointer">
+          <  Previous </div>
       </button>
       <button v-if="index < LAST_INDEX" type="button" @click="goNext" :disabled="index >= LAST_INDEX">
         <div
-          class="flex flex-row items-center gap-2 text-yuh-orange hover:text-yuh-black rounded-full pl-4 pr-4 p-4  hover:cursor-pointer">
-          Next >
+          class="flex flex-row items-center gap-2 bg-yuh-orange text-white hover:bg-yuh-orange/90 rounded-4xl pl-4 pr-4 p-4  hover:cursor-pointer">
+          Next  >
         </div>
       </button>
     </div>

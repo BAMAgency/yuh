@@ -59,7 +59,33 @@ const expensesOptions = [
     }
 ]
 
-const expenses = computed(() => (Array.isArray(props.modelValue) ? props.modelValue : []))
+function normalizeAmount(value) {
+    if (value === '' || value === null || value === undefined) {
+        return null
+    }
+
+    const parsed = Number(value)
+    if (!Number.isFinite(parsed) || parsed < 0) {
+        return null
+    }
+
+    return parsed
+}
+
+function normalizeExpenses(list) {
+    if (!Array.isArray(list)) {
+        return []
+    }
+
+    return list
+        .map((expense) => ({
+            category: String(expense?.category || ''),
+            amount: normalizeAmount(expense?.amount)
+        }))
+        .filter((expense) => expense.category)
+}
+
+const expenses = computed(() => normalizeExpenses(props.modelValue))
 const canAddMore = computed(() => expenses.value.length < expensesOptions.length)
 
 function firstAvailableCategory(usedCategories) {
@@ -67,7 +93,7 @@ function firstAvailableCategory(usedCategories) {
 }
 
 function updateExpenses(nextExpenses) {
-    emit('update:modelValue', nextExpenses)
+    emit('update:modelValue', normalizeExpenses(nextExpenses))
 }
 
 function addExpense() {
@@ -82,7 +108,7 @@ function addExpense() {
         return
     }
 
-    updateExpenses([...expenses.value, { category: nextCategory, amount: '' }])
+    updateExpenses([...expenses.value, { category: nextCategory, amount: null }])
 }
 
 function removeExpense(index) {
@@ -113,7 +139,7 @@ function updateExpense(index, nextExpense) {
 
     nextExpenses[index] = {
         category: nextCategory,
-        amount: nextExpense.amount
+        amount: normalizeAmount(nextExpense.amount)
     }
 
     updateExpenses(nextExpenses)

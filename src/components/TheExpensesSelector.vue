@@ -58,7 +58,7 @@ function removeExpense() {
 
         <div class="text-left">
             <input :id="`expense-amount-${index}`" type="number" min="0" class="yuh-input"
-                placeholder="Your monthly expense (CHF)" :value="modelValue.amount" @input="updateAmount" />
+                placeholder="Your monthly expense (CHF)" :value="modelValue.amount ?? ''" @input="updateAmount" />
         </div>
 
         <button type="button"

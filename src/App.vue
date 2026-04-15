@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import NavBar from './components/NavBar.vue'
+import NavBar from './components/core/NavBar.vue'
 import TheCalculator from './components/TheCalculator.vue'
 
 const isStarted = ref(false);
@@ -28,7 +28,7 @@ onMounted(() => {
         Should yuh invest ?
       </div>
       <div>
-        <div class="flex flex-col text-center items-center gap-4 md:text-xl lg:text-2xl text-lg pr-12 pl-12">
+        <div v-if="!isStarted" class="flex flex-col text-center items-center gap-4 md:text-xl lg:text-2xl text-lg pr-12 pl-12">
           Find out in 5 minutes with our calculator. <br />
           Discover your budget, risk tolerance and investment horizon to get personalized recommendations.
         </div>

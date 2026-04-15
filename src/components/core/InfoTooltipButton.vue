@@ -36,11 +36,11 @@ function close() {
       @focus="open"
       @blur="close"
     >
-      i
+i
     </button>
     <div
       v-show="isOpen"
-      class="font-medium absolute bottom-full right-0 mb-2 w-max rounded-md bg-yuh-black p-2 text-xs text-white"
+      class="absolute bottom-full right-0 mb-2 w-72 rounded-md bg-yuh-black p-3 whitespace-normal text-[0.7rem] font-medium leading-snug text-white sm:w-80 sm:text-xs md:w-96 md:text-sm"
     >
       {{ text }}
     </div>
