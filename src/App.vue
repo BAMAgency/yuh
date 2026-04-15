@@ -24,8 +24,8 @@ onMounted(() => {
     <div class="relative z-10 flex flex-col items-center gap-4 text-yuh-black font-display">
     <NavBar />
     <div class="flex flex-col items-center gap-4 max-w-2xl mt-12">
-      <div class=" md:text-5xl lg:text-6xl text-3xl mb-6">
-        Should yuh invest ?
+      <div class=" md:text-5xl lg:text-5xl text-3xl mb-6">
+        How should Yuh invest ?
       </div>
       <div>
         <div v-if="!isStarted" class="flex flex-col text-center items-center gap-4 md:text-xl lg:text-2xl text-lg pr-12 pl-12">

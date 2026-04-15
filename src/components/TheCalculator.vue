@@ -10,6 +10,9 @@ import LearnMoreRiskLevel from './learnmoreSections/LearnMoreRiskLevel.vue'
 import TheExpenseSection from './TheExpenseSection.vue'
 import TheDashboard from './TheDashboard.vue'
 import InfoTooltipButton from './core/InfoTooltipButton.vue'
+import { ChevronLeft } from 'lucide-vue-next'
+import { ChevronRight } from 'lucide-vue-next'
+
 
 const index = ref(0);
 const ageInput = ref(25);
@@ -51,8 +54,13 @@ function goNext() {
   <div class="flex flex-col items-center gap-12 mb-12 rounded-xl bg-white shadow-xl p-12">
 
     <!-- Première section : l'onboarding -->
-    <div v-if="index == 0"
-      class="lg:min-w-xl md:min-w-md sm:min-w-sm text-center text-sm md:text-base lg:text-lg">
+    <div v-if="index == 0" class="lg:min-w-xl md:min-w-md sm:min-w-sm text-center text-sm md:text-base lg:text-lg">
+
+      <div class="mb-6 flex flex-col gap-2">
+        <h1 class="text-2xl font-bold">Let's get started!</h1>
+        <p class="font-medium text-md">Answer a few questions about yourself to get personalized financial advice.</p>
+      </div>
+
       <form action="" class="flex flex-col gap-8">
 
         <RangeSlider v-model="ageInput" id="age" name="age" label="Age" :min="18" :max="75" step="1" />
@@ -132,12 +140,14 @@ function goNext() {
       <button v-if="index > 0" type="button" @click="goPrevious" :disabled="index === 0">
         <div
           class="flex flex-row items-center gap-2 pl-4 pr-4 p-4 bg-yuh-orange text-white rounded-4xl hover:bg-yuh-orange/90 hover:cursor-pointer">
-          <  Previous </div>
+          <ChevronLeft /> Previous
+        </div>
       </button>
       <button v-if="index < LAST_INDEX" type="button" @click="goNext" :disabled="index >= LAST_INDEX">
         <div
           class="flex flex-row items-center gap-2 bg-yuh-orange text-white hover:bg-yuh-orange/90 rounded-4xl pl-4 pr-4 p-4  hover:cursor-pointer">
-          Next  >
+          Next
+          <ChevronRight />
         </div>
       </button>
     </div>

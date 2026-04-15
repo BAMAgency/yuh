@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import TheSpeedometerChart from './charts/TheSpeedometerChart.vue'
 import TheExpensesDonut from './charts/TheExpensesDonut.vue'
 import TheInvestmentDonut from './charts/TheInvestmentDonut.vue'
+import { Download } from 'lucide-vue-next';
 
 const props = defineProps({
     age: Number,
@@ -112,9 +113,18 @@ const financialHealth = computed(() => {
 
     <div class="flex flex-col gap-4 items-center">
 
-        <h1 class="font-bold text-4xl text-yuh-rose mb-6">
-            Your financial at a glance
+        <h1 class="font-bold text-4xl text-yuh-black">
+            Your financial recommendations
         </h1>
+        <p class="font-medium mb-6">
+            Here are your personalized financial recommendations based on your income and expenses.
+        </p>
+        <div class="flex w-full justify-end ">
+            <div class="flex flex-row items-center gap-2 font-bold text-yuh-orange hover:underline p-2 rounded-xl hover:cursor-pointer text-xs">
+                <Download/> Export my recommendations
+            </div>
+        </div>
+
         <!-- Left Amount -->
         <div id="left-amount"
             class="w-full lg:min-w-xl flex flex-col gap-4 rounded-xl border border-yuh-purple p-4 text-left">
@@ -190,6 +200,9 @@ const financialHealth = computed(() => {
         <!--The investment recommandations chart-->
         <TheInvestmentDonut :left="leftAmount" :debt="debt" :riskLevel="riskLevel" :objective="objective"
             :horizon="horizon" :highInterestDebt="highInterestDebt" :save="save" :monthlyExpenses="totalExpenses" />
+            <div class="font-medium text-sm">   
+                <p>This is for informational purposes only. Yuh takes no responsibility for any financial decisions you make based on these recommendations.</p>
+            </div>
     </div>
 </template>
 

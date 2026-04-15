@@ -12,17 +12,17 @@ const horizonOptions = [
   {
     value: 'short',
     label: 'Short term',
-    description: '0-3 years. Prioritize flexibility and lower volatility.'
+    description: '0-3 years. You’ll need this money soon.'
   },
   {
     value: 'medium',
     label: 'Medium term',
-    description: '3-7 years. Balance growth potential with moderate risk.'
+    description: '3-7 years. You have some time before using this money.'
   },
   {
     value: 'long',
     label: 'Long term',
-    description: '7+ years. Focus on growth and ride market fluctuations.'
+    description: '7+ years. You won’t need this money for a while.'
   }
 ]
 
@@ -34,8 +34,8 @@ function selectHorizon(value) {
 <template>
   <div class="flex flex-col gap-8">
     <div class="text-left">
-      <p class="text-xl">What is your investment horizon?</p>
-      <p class="mt-1 text-sm font-medium text-yuh-black/70">Choose the timeline that best fits your goal.</p>
+      <p class="text-xl">When will you need the money that you are investing?</p>
+      <p class="mt-1 text-sm font-medium text-yuh-black/70">Choose the timeframe that best matches your goal.</p>
     </div>
 
     <div class="grid gap-4 md:grid-cols-3">
