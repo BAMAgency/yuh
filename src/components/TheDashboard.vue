@@ -1,6 +1,5 @@
 <script setup>
 import { computed, ref } from 'vue'
-import TheSpeedometerChart from './charts/TheSpeedometerChart.vue'
 import TheExpensesDonut from './charts/TheExpensesDonut.vue'
 import TheInvestmentDonut from './charts/TheInvestmentDonut.vue'
 import { Download } from 'lucide-vue-next';
@@ -111,6 +110,15 @@ const financialHealth = computed(() => {
       - possibilité d'exporter les résultats et les recommandations -> à faire
     -->
 
+    <div id="chatbot-button" class="fixed right-4 sm:right-6" style="bottom: calc(1rem + env(safe-area-inset-bottom));">
+
+        <button type="button"
+            class="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-full border-4 bg-white border-yuh-orange shadow-lg transition-transform hover:scale-105 hover:cursor-pointer">
+
+            <img src="/assets/yuhlia.svg" alt="Yuh chatbot" class="h-14 w-14 sm:h-16 sm:w-16" />
+        </button>
+    </div>
+
     <div class="flex flex-col gap-4 items-center">
 
         <h1 class="font-bold text-4xl text-yuh-black">
@@ -120,8 +128,9 @@ const financialHealth = computed(() => {
             Here are your personalized financial recommendations based on your income and expenses.
         </p>
         <div class="flex w-full justify-end ">
-            <div class="flex flex-row items-center gap-2 font-bold text-yuh-orange hover:underline p-2 rounded-xl hover:cursor-pointer text-xs">
-                <Download/> Export my recommendations
+            <div
+                class="flex flex-row items-center gap-2 font-bold text-yuh-orange hover:underline p-2 rounded-xl hover:cursor-pointer text-xs">
+                <Download /> Export my recommendations
             </div>
         </div>
 
@@ -200,9 +209,10 @@ const financialHealth = computed(() => {
         <!--The investment recommandations chart-->
         <TheInvestmentDonut :left="leftAmount" :debt="debt" :riskLevel="riskLevel" :objective="objective"
             :horizon="horizon" :highInterestDebt="highInterestDebt" :save="save" :monthlyExpenses="totalExpenses" />
-            <div class="font-medium text-sm">   
-                <p>This is for informational purposes only. Yuh takes no responsibility for any financial decisions you make based on these recommendations.</p>
-            </div>
+        <div class="font-medium text-sm">
+            <p>This is for informational purposes only. Yuh takes no responsibility for any financial decisions you make
+                based on these recommendations.</p>
+        </div>
     </div>
 </template>
 
