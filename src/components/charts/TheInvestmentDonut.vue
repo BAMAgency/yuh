@@ -1,6 +1,7 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { Doughnut } from 'vue-chartjs'
+import InfoTooltipButton from '../core/InfoTooltipButton.vue'
 import {
     Chart as ChartJS,
     ArcElement,
@@ -62,6 +63,9 @@ const safeLeft = computed(() => Math.max(Number(props.left) || 0, 0))
 const safeDebt = computed(() => Math.max(Number(props.debt) || 0, 0))
 const safeSavings = computed(() => Math.max(Number(props.save) || 0, 0))
 const safeMonthlyExpenses = computed(() => Math.max(Number(props.monthlyExpenses) || 0, 0))
+
+
+const isAssetmentInfoOpen = ref(false)
 
 const monthsOfSafety = computed(() => {
     if (safeMonthlyExpenses.value <= 0) return 0
@@ -251,6 +255,28 @@ const allocationAmounts = computed(() => {
     }
 })
 
+const investmentBreakdownAmounts = computed(() => {
+    const investable = Math.max(Number(allocationAmounts.value.investing) || 0, 0)
+    const profile = selectedInvestmentProfile.value
+
+    const amounts = {
+        equities: Math.round((investable * profile.equities) / 100),
+        bonds: Math.round((investable * profile.bonds) / 100),
+        alternatives: Math.round((investable * profile.alternatives) / 100),
+        cash: Math.round((investable * profile.cash) / 100)
+    }
+
+    const distributed = amounts.equities + amounts.bonds + amounts.alternatives + amounts.cash
+    const diff = investable - distributed
+
+    amounts.cash += diff
+    if (amounts.cash < 0) {
+        amounts.cash = 0
+    }
+
+    return amounts
+})
+
 const mainLegendItems = computed(() => [
     {
         key: 'debtRepayment',
@@ -287,24 +313,28 @@ const investmentLegendItems = computed(() => [
         key: 'equities',
         label: 'Equities',
         percentage: selectedInvestmentProfile.value.equities,
+        amount: investmentBreakdownAmounts.value.equities,
         color: '#CCB1DA'
     },
     {
         key: 'bonds',
         label: 'Bonds',
         percentage: selectedInvestmentProfile.value.bonds,
+        amount: investmentBreakdownAmounts.value.bonds,
         color: '#6197AF'
     },
     {
         key: 'alternatives',
         label: 'Alternatives',
         percentage: selectedInvestmentProfile.value.alternatives,
+        amount: investmentBreakdownAmounts.value.alternatives,
         color: '#FAB4CC'
     },
     {
         key: 'cash',
         label: 'Cash',
         percentage: selectedInvestmentProfile.value.cash,
+        amount: investmentBreakdownAmounts.value.cash,
         color: '#EBDDF5'
     }
 ])
@@ -395,7 +425,7 @@ const recommendationText = computed(() => {
 </script>
 
 <template>
-    <div class="flex w-full flex-col lg:flex-row gap-6">
+    <div class="flex w-full flex-col gap-6 lg:flex-row lg:items-start">
         <div class="rounded-2xl border border-yuh-purple p-5 text-left">
             <div class="mb-4">
                 <h2 class="text-2xl font-semibold text-yuh-black">Recommended monthly allocation</h2>
@@ -423,7 +453,7 @@ const recommendationText = computed(() => {
                     </ul>
                 </div>
 
-                <div class="flex flex-col gap-4">
+                <div id="allocation-details" class="flex flex-col gap-4">
                     <div class="grid gap-3 sm:grid-cols-2">
                         <div class="rounded-xl bg-yuh-pale-violet p-4">
                             <p class="text-sm font-medium text-yuh-black/70">Debt repayment</p>
@@ -451,14 +481,21 @@ const recommendationText = computed(() => {
                         </div>
                     </div>
 
-                    <div class="rounded-xl border border-yuh-pale-violet p-4">
+                    <div>
+                        <button @click="isAssetmentInfoOpen = !isAssetmentInfoOpen"
+                            class="text-sm text-yuh-orange hover:text-yuh-black transition-colors mb-2">
+                            {{ isAssetmentInfoOpen ? '- Show less' : '+ Why this split?' }}
+                        </button>
+                    </div>
+                    <div v-if="isAssetmentInfoOpen">
+                        <div class="rounded-xl border border-yuh-pale-violet p-4">
                         <p class="text-base font-semibold text-yuh-black">Why this split?</p>
                         <p class="mt-2 text-sm font-medium text-yuh-black/70">
                             {{ recommendationText }}
                         </p>
                     </div>
 
-                    <div class="rounded-xl border border-yuh-pale-violet p-4">
+                    <div v-if="isAssetmentInfoOpen" class="rounded-xl border border-yuh-pale-violet p-4">
                         <p class="text-base font-semibold text-yuh-black">Emergency savings status</p>
                         <div class="mt-3 grid gap-3 sm:grid-cols-3">
                             <div>
@@ -474,6 +511,7 @@ const recommendationText = computed(() => {
                                 <p class="text-xl font-bold text-yuh-black">{{ recommendedSafetyMonths }} months</p>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -491,6 +529,26 @@ const recommendationText = computed(() => {
                     Breakdown of the investing portion based on the selected risk level
                 </p>
             </div>
+            <div class="flex flex-col">
+                <div class="flex w-full items-center gap-2">
+                    <div>
+                        <p class="text-base font-bold text-yuh-black">
+                            Selected risk level : <span class="font-bold text-yuh-orange">{{ riskLevel }}</span>
+                        </p>
+                    </div>
+                    <div class="ml-auto">
+                        <InfoTooltipButton text="This affects only the composition of the investing portion, not the emergency savings or
+                            debt priorities." />
+                    </div>
+
+                </div>
+                <div class="text-yuh-orange">
+                    <img v-for="n in riskPimentLevel" :key="`piment-${n}`" :src="pimentPath"
+                        :alt="`${riskPimentLevel} piments`" class="inline-block h-6 w-6" />
+                    <img v-for="n in 6 - riskPimentLevel" :key="`piment-blank-${n}`" :src="pimentBlankPath"
+                        :alt="`${riskPimentLevel} piments`" class="inline-block h-6 w-6" />
+                </div>
+            </div>
 
             <div class="grid gap-6 lg:grid-row-[320px_1fr]">
                 <div class="p-4">
@@ -505,58 +563,48 @@ const recommendationText = computed(() => {
                                     :style="{ backgroundColor: item.color }"></span>
                                 <span class="text-yuh-black">{{ item.label }}</span>
                             </div>
-                            <span class="font-medium text-yuh-black/80">{{ item.percentage }}%</span>
+                            <span class="font-medium text-yuh-black/80">{{ item.percentage }}% · CHF {{
+                                item.amount.toLocaleString() }}</span>
                         </li>
                     </ul>
                 </div>
 
-                <div class="flex flex-col gap-3">
+                <div id="investment-allocation-details" class="flex flex-col gap-4">
                     <div class="rounded-xl bg-yuh-pale-violet p-4">
                         <p class="text-sm font-medium text-yuh-black/70">Monthly amount to invest</p>
                         <p class="text-2xl font-bold text-yuh-black">{{ allocationAmounts.investing }} CHF</p>
                     </div>
 
                     <div class="grid gap-3 sm:grid-cols-2">
-                        <div class="rounded-xl border border-yuh-pale-violet p-4">
+                        <div class="rounded-xl bg-yuh-pale-violet p-4">
                             <p class="text-sm font-medium text-yuh-black/70">Equities</p>
-                            <p class="text-xl font-bold text-yuh-black">{{ selectedInvestmentProfile.equities }}%</p>
+                            <p class="text-2xl font-bold text-yuh-black">CHF {{
+                                investmentBreakdownAmounts.equities.toLocaleString() }}</p>
+                            <p class="text-sm text-yuh-black/70">{{ selectedInvestmentProfile.equities }}%</p>
                         </div>
-
-                        <div class="rounded-xl border border-yuh-pale-violet p-4">
+                        <div class="rounded-xl bg-yuh-pale-violet p-4">
                             <p class="text-sm font-medium text-yuh-black/70">Bonds</p>
-                            <p class="text-xl font-bold text-yuh-black">{{ selectedInvestmentProfile.bonds }}%</p>
+                            <p class="text-2xl font-bold text-yuh-black">CHF {{
+                                investmentBreakdownAmounts.bonds.toLocaleString() }}</p>
+                            <p class="text-sm text-yuh-black/70">{{ selectedInvestmentProfile.bonds }}%</p>
                         </div>
 
-                        <div class="rounded-xl border border-yuh-pale-violet p-4">
+                        <div class="rounded-xl bg-yuh-pale-violet p-4">
                             <p class="text-sm font-medium text-yuh-black/70">Alternatives</p>
-                            <p class="text-xl font-bold text-yuh-black">{{ selectedInvestmentProfile.alternatives }}%
-                            </p>
+                            <p class="text-2xl font-bold text-yuh-black">CHF {{
+                                investmentBreakdownAmounts.alternatives.toLocaleString() }}</p>
+                            <p class="text-sm text-yuh-black/70">{{ selectedInvestmentProfile.alternatives }}%</p>
                         </div>
 
-                        <div class="rounded-xl border border-yuh-pale-violet p-4">
+                        <div class="rounded-xl bg-yuh-pale-violet p-4">
                             <p class="text-sm font-medium text-yuh-black/70">Cash</p>
-                            <p class="text-xl font-bold text-yuh-black">{{ selectedInvestmentProfile.cash }}%</p>
+                            <p class="text-2xl font-bold text-yuh-black">CHF {{
+                                investmentBreakdownAmounts.cash.toLocaleString() }}</p>
+                            <p class="text-sm text-yuh-black/70">{{ selectedInvestmentProfile.cash }}%</p>
                         </div>
                     </div>
 
-                    <div class="rounded-xl border border-yuh-pale-violet p-4">
-                        <div class="flex flex-wrap items-center">
-                            <p class="text-base font-bold text-yuh-black">
-                                Selected risk level : <span class="font-bold text-yuh-orange">{{ riskLevel }}</span>
-                            </p>
 
-                        </div>
-                        <div class="text-yuh-orange">
-                            <img v-for="n in riskPimentLevel" :key="`piment-${n}`" :src="pimentPath"
-                                :alt="`${riskPimentLevel} piments`" class="inline-block h-4 w-4" />
-                            <img v-for="n in 6 - riskPimentLevel" :key="`piment-blank-${n}`" :src="pimentBlankPath"
-                                :alt="`${riskPimentLevel} piments`" class="inline-block h-4 w-4" />
-                        </div>
-                        <p class="mt-2 text-sm font-medium text-yuh-black/70">
-                            This affects only the composition of the investing portion, not the emergency savings or
-                            debt priorities.
-                        </p>
-                    </div>
                 </div>
             </div>
         </div>

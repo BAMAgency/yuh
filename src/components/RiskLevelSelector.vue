@@ -57,7 +57,7 @@ function selectRiskLevel(value) {
       <p class="mt-1 text-sm font-medium text-yuh-black/70">Choose the option that matches how much market fluctuation you can accept.</p>
     </div>
 
-    <div class="grid gap-4 md:grid-cols-3">
+    <div class="grid gap-4 md:grid-cols-3 lg:grid-cols-2">
       <button
         v-for="option in riskOptions"
         :key="option.value"

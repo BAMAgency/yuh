@@ -40,7 +40,7 @@ function toggle() {
             <div class="mt-2">
                 <div class="mt-3">
                     <div>
-                        <a class="text-yuh-violet hover:underline" href="
+                        <a class="text-yuh-orange hover:underline" href="
                         https://www.yuh.com/fr/yuhlearn/cinq-strategies-pour-les-cinq-types-dinvestissement/"> Read that article to learn more !</a>
                     </div>
                 </div>

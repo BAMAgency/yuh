@@ -153,7 +153,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="flex flex-col gap-4 border border-yuh-purple/50 rounded-xl p-4">
+    <div class="flex flex-col gap-4 ">
         <div class="text-left">
             <p class="text-xl">Expense Section</p>
             <p class="mt-1 text-sm font-medium text-yuh-black/70">Add your recurring monthly expenses. You cannot select the same category twice.</p>
