@@ -1,0 +1,9 @@
+<svg width="777" height="333" viewBox="0 0 777 333" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse id="expression_bounce" cx="386.5" cy="164.5" rx="386.5" ry="164.5" transform="matrix(-1 0 0 1 775 2)" stroke="url(#paint0_linear_0_1675)" stroke-width="4" stroke-linecap="round" stroke-dasharray="20 22"/>
+<defs>
+<linearGradient id="paint0_linear_0_1675" x1="-81.8543" y1="243.382" x2="288.818" y2="243.382" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FA5B35" stop-opacity="0.01"/>
+<stop offset="1" stop-color="#FA5B35"/>
+</linearGradient>
+</defs>
+</svg>
