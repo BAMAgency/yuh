@@ -28,6 +28,8 @@ const safeCurrentInvestment = computed(() => Number(props.currentInvestment) || 
 const safeSave = computed(() => Number(props.save) || 0)
 
 const popupIndex = ref(0);
+const yuhliaChatbotIconPath = `${import.meta.env.BASE_URL}assets/yuhlia.svg`
+const yuhliaEntirePath = `${import.meta.env.BASE_URL}assets/yuhlia-entire.svg`
 
 const totalExpenses = computed(() =>
     (props.expenses || []).reduce((total, expense) => total + (Number(expense.amount) || 0), 0)
@@ -118,7 +120,7 @@ const financialHealth = computed(() => {
         <button type="button" @click="popupIndex = 0"
             class="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-full border-4 bg-white border-yuh-orange shadow-lg transition-transform hover:scale-105 hover:cursor-pointer">
 
-            <img :src="`${import.meta.env.BASE_URL}assets/yuhlia.svg`" alt="Yuh chatbot" class="h-14 w-14 sm:h-16 sm:w-16" />
+            <img :src="yuhliaChatbotIconPath" alt="Yuh chatbot" class="h-14 w-14 sm:h-16 sm:w-16" />
         </button>
     </div>
 
@@ -143,7 +145,7 @@ const financialHealth = computed(() => {
             <div v-if="popupIndex === 0" class="yuhlia-greeting absolute z-20 -translate-y-1/2 -translate-x-1/2">
                 <div
                     class="yuhlia-soft-bounce  bg-yuh-orange text-white p-2 rounded-2xl max-w-sm flex flex-row items-center">
-                    <img class="h-80 w-80  -translate-x-5 translate-y-10" :src="`${import.meta.env.BASE_URL}assets/yuhlia-entire.svg`" alt="Yuhlia" />
+                    <img class="h-80 w-80  -translate-x-5 translate-y-10" :src="yuhliaEntirePath" alt="Yuhlia" />
                     <button @click="popupIndex = 12"
                         class="text-white absolute top-2 left-2 rounded-full  w-6 h-6 flex items-center justify-center">
                         X

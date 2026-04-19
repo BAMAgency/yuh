@@ -4,6 +4,7 @@ import NavBar from './components/core/NavBar.vue'
 import TheCalculator from './components/TheCalculator.vue'
 
 const isStarted = ref(false);
+const backgroundImagePath = `${import.meta.env.BASE_URL}assets/Background_Abstract_03.svg`
 
 onMounted(() => {
   document.title = "Yuh Budget Calculator";
@@ -17,7 +18,7 @@ onMounted(() => {
   <div class="relative min-h-screen overflow-x-hidden">
     <img
       class="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-100"
-      :src="`${import.meta.env.BASE_URL}assets/Background_Abstract_03.svg`"
+      :src="backgroundImagePath"
       alt="Background image"
     />
 
