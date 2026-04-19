@@ -10,7 +10,7 @@ const props = defineProps({
     income: {
         type: Number,
         default: 0
-    }
+    },
 })
 
 const palette = ['#FAB4CC', '#CCB1DA', '#EBDDF5', '#BABDE4', '#6197AF', '#FA5B35', '#78C6E7', '#151A21']

@@ -4,6 +4,7 @@ import TheExpensesDonut from './charts/TheExpensesDonut.vue'
 import TheInvestmentDonut from './charts/TheInvestmentDonut.vue'
 import { Download } from 'lucide-vue-next';
 import { ChevronRight } from 'lucide-vue-next';
+import { ArrowBigDown } from 'lucide-vue-next';
 
 const props = defineProps({
     age: Number,
@@ -115,12 +116,12 @@ const financialHealth = computed(() => {
       - possibilité d'exporter les résultats et les recommandations -> à faire
     -->
 
+    <!--Chatbot Button-->
     <div id="chatbot-button" class="fixed right-4 sm:right-6" style="bottom: calc(1rem + env(safe-area-inset-bottom));">
 
         <button type="button" @click="popupIndex = 0"
-            class="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-full border-4 bg-white border-yuh-orange shadow-lg transition-transform hover:scale-105 hover:cursor-pointer">
-
-            <img :src="yuhliaChatbotIconPath" alt="Yuh chatbot" class="h-14 w-14 sm:h-16 sm:w-16" />
+            class="shadow-2xl flex h-14 w-14 sm:h-24 sm:w-24 items-center justify-center rounded-full border-4 bg-white border-yuh-orange transition-transform hover:scale-105 hover:cursor-pointer">
+            <img src="/assets/yuhlia.svg" alt="Yuh chatbot" class="h-14 w-14 sm:h-24 sm:w-24" />
         </button>
     </div>
 
@@ -139,19 +140,23 @@ const financialHealth = computed(() => {
             </div>
         </div>
 
+
         <!-- Left Amount -->
         <div id="left-amount"
             class="relative overflow-visible w-full lg:min-w-xl flex flex-col gap-4 rounded-xl border border-yuh-purple p-4 text-left">
-            <div v-if="popupIndex === 0" class="yuhlia-greeting absolute z-20 -translate-y-1/2 -translate-x-1/2">
+
+            <!-- popup 1 -->
+            <div v-if="popupIndex === 0" class="yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 lg:left-0 lg:top-0 lg:-translate-y-1/2 lg:-translate-x-1/2">
                 <div
-                    class="yuhlia-soft-bounce  bg-yuh-orange text-white p-2 rounded-2xl max-w-sm flex flex-row items-center">
-                    <img class="h-80 w-80  -translate-x-5 translate-y-10" :src="yuhliaEntirePath" alt="Yuhlia" />
+                    class="yuhlia-soft-bounce shadow-2xl bg-yuh-orange text-white p-2 rounded-2xl max-w-sm flex flex-row items-center">
+                    <img class="h-40 w-40 md:h-80 md:w-80  -translate-x-5 translate-y-10" src="/assets/yuhlia-entire.svg"
+                        alt="Yuhlia" />
                     <button @click="popupIndex = 12"
                         class="text-white absolute top-2 left-2 rounded-full  w-6 h-6 flex items-center justify-center">
                         X
                     </button>
                     <div class="flex flex-col items-end gap-16 mr-2">
-                        <h2 class="font-medium text-sm mr-4">1/4</h2>
+                        <h2 class="font-medium text-sm mr-4">1/5</h2>
                         <h1 class="text-lg font-bold">Hi ! I am Yuhlia, your personal AI financial assistant!</h1>
                         <button
                             class="flex flex-row items-center text-black bg-white rounded-2xl text-orange-yuh px-4 py-2 font-bold transition-colors  hover:cursor-pointer"
@@ -162,35 +167,39 @@ const financialHealth = computed(() => {
                     </div>
                 </div>
             </div>
-            
-            <div
-                id="left-amount-details"
-                class="grid items-center gap-4 md:grid-cols-[auto_1fr]"
-            >
-                <div class="relative inline-flex items-center justify-center">
+
+
+
+            <div id="left-amount-details" class="grid items-center gap-4 md:grid-cols-[auto_1fr]">
+                <div class="relative inline-flex items-center justify-center" :class="popupIndex === 1 ? 'animate-bounce' : 'z-10'">
                     <p class="relative z-10 text-4xl font-bold leading-none text-yuh-violet md:text-5xl">
                         {{ getLeftAmount() }} CHF
                     </p>
                 </div>
-                <div  class="flex flex-col gap-2">
+
+                <div class="flex flex-col gap-2">
+
                     <h1 class="text-2xl font-semibold text-yuh-black md:text-3xl">Left amount</h1>
                     <p class="text-sm font-medium text-yuh-black/70 md:text-base">
                         What's left after expenses each month
                     </p>
                 </div>
             </div>
-            <div v-if="popupIndex === 1" class="yuhlia-greeting absolute z-20 translate-y-2/3 translate-x-3/3">
+
+            <!-- popup 2 -->
+            <div v-if="popupIndex === 1" class="shadow-2xl yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 lg:left-0 lg:top-0 lg:translate-y-40 lg:translate-x-20">
                 <div
-                    class="yuhlia-soft-bounce  bg-yuh-orange text-white p-2 rounded-2xl max-w-xs flex flex-row items-center">
+                    class=" bg-yuh-orange text-white p-2 rounded-2xl max-w-xs flex flex-row items-center">
                     <button @click="popupIndex = 12"
                         class="text-white absolute top-2 left-2 rounded-full  w-6 h-6 flex items-center justify-center ">
                         X
                     </button>
                     <div class="flex flex-col items-center gap-6 mx-2">
-                        <h2 class="font-medium text-sm">2/4</h2>
-                        <h1 class="text-lg font-bold">Your left Amount</h1>
+                        <h2 class="font-medium text-sm">2/5</h2>
+                        <h1 class="text-xl font-bold">Your left Amount</h1>
                         <p class="font-medium text-center">
-                            This is the amount you have left each month after covering your expenses. It is calculated by subtracting your total monthly expenses from your monthly income.
+                            This is the amount you have left each month after covering your expenses. It is calculated
+                            by subtracting your total monthly expenses from your monthly income.
                         </p>
                         <button
                             class="mb-2 flex flex-row items-center text-black bg-white rounded-2xl text-orange-yuh px-4 py-2 font-bold transition-colors  hover:cursor-pointer"
@@ -207,8 +216,82 @@ const financialHealth = computed(() => {
                     {{ isOpen ? '- Show less' : '+ Show expenses details' }}
                 </button>
             </div>
+
+             <!-- popup 3 -->
+            <div v-if="popupIndex === 2" class="shadow-2xl yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 lg:left-0 lg:top-0 lg:translate-y-40 lg:translate-x-90">
+                <div
+                    class=" bg-yuh-orange text-white p-2 rounded-2xl max-w-xs flex flex-row items-center">
+                    <button @click="popupIndex = 12"
+                        class="text-white absolute top-2 left-2 rounded-full  w-6 h-6 flex items-center justify-center ">
+                        X
+                    </button>
+                    <div class="flex flex-col items-center gap-6 mx-2">
+                        <h2 class="font-medium text-sm">3/5</h2>
+                        <h1 class="text-xl font-bold">Your Recommended monthly allocation</h1>
+                        <p class="font-medium text-center">
+                           What do you do with that left amount? Here is our recommendation on how to allocate it each month based on your financial situation and goals.
+                        </p>
+                        <button
+                            class="mb-2 flex flex-row items-center text-black bg-white rounded-2xl text-orange-yuh px-4 py-2 font-bold transition-colors  hover:cursor-pointer"
+                            @click="popupIndex++">
+                            <span class="mr-4 ">Next</span>
+                            <ChevronRight />
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+             <!-- popup 4 -->
+            <div v-if="popupIndex === 3" class="shadow-2xl yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 lg:left-0 lg:top-0 lg:translate-y-40 ">
+                <div
+                    class=" bg-yuh-orange text-white p-2 rounded-2xl max-w-xs flex flex-row items-center">
+                    <button @click="popupIndex = 12"
+                        class="text-white absolute top-2 left-2 rounded-full  w-6 h-6 flex items-center justify-center ">
+                        X
+                    </button>
+                    <div class="flex flex-col items-center gap-6 mx-2">
+                        <h2 class="font-medium text-sm">4/5</h2>
+                        <h1 class="text-xl font-bold">Suggested Allocation Mix</h1>
+                        <p class="font-medium text-center">
+                         Based on your horizon, risk level, and financial situation, we suggest a mix of investments that can help you grow your wealth while managing risk. 
+                         </p>
+                        <button
+                            class="mb-2 flex flex-row items-center text-black bg-white rounded-2xl text-orange-yuh px-4 py-2 font-bold transition-colors  hover:cursor-pointer"
+                            @click="popupIndex++">
+                            <span class="mr-4 ">Next</span>
+                            <ChevronRight />
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div v-if="popupIndex === 4" class="shadow-2xl yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 ">
+                <div
+                    class="yuhlia-soft-bounce bg-yuh-orange text-white p-2 rounded-2xl max-w-xs lg:max-w-lg flex flex-row items-center">
+                    <img class="h-40 w-40 md:h-80 md:w-80 -translate-x-5 translate-y-10" src="/assets/yuhlia-entire.svg"
+                        alt="Yuhlia" />
+                    <button @click="popupIndex = 12"
+                        class="text-white absolute top-2 left-2 rounded-full  w-6 h-6 flex items-center justify-center ">
+                        X
+                    </button>
+                    <div class="flex flex-col items-center gap-6 mx-2">
+
+                        <h2 class="font-medium text-sm">5/5</h2>
+                        
+                        <h1 class="text-xl font-bold text-center">Want to bring all that to life?</h1>
+                        <p class="font-medium text-center">
+                            With your Yuh account, you can easily implement these recommendations and start your investment journey in just a few clicks. I will be here to guide you if you need any help along the way!
+                         </p>
+                        <button
+                            class="mb-2 flex flex-row items-center text-black bg-white rounded-2xl text-orange-yuh px-4 py-2 font-bold transition-colors  hover:cursor-pointer"
+                            @click="popupIndex++">
+                            <span class="mr-4 ">Next</span>
+                            <ChevronRight />
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div v-show="isOpen">
-                <TheExpensesDonut :expenses="expenses" :income="income" />
+                <TheExpensesDonut :expenses="expenses" :income="income" :popupIndex="popupIndex"/>
             </div>
         </div>
 
@@ -261,7 +344,7 @@ const financialHealth = computed(() => {
 
         <!--The investment recommandations chart-->
         <TheInvestmentDonut :left="leftAmount" :debt="debt" :riskLevel="riskLevel" :objective="objective"
-            :horizon="horizon" :highInterestDebt="highInterestDebt" :save="save" :monthlyExpenses="totalExpenses" />
+            :horizon="horizon" :highInterestDebt="highInterestDebt" :save="save" :monthlyExpenses="totalExpenses" :popupIndex="popupIndex"/>
         <div class="font-medium text-sm">
             <p>This is for informational purposes only. Yuh takes no responsibility for any financial decisions you make
                 based on these recommendations.</p>
@@ -271,8 +354,7 @@ const financialHealth = computed(() => {
 
 <style scoped>
 .yuhlia-greeting {
-    left: 0;
-    top: 0;
+    width: max-content;
 }
 
 .yuhlia-greeting__card {
@@ -295,5 +377,31 @@ const financialHealth = computed(() => {
     50% {
         transform: translateY(-6px);
     }
+}
+
+.bounce-border {
+  position: relative;
+}
+
+.bounce-border::before {
+  content: "";
+  position: absolute;
+  inset: 0; /* même taille */
+  border-radius: inherit;
+  border: 4px solid #ff7a00; /* ton orange */
+  pointer-events: none;
+
+  animation: pulseBorder 1s infinite;
+}
+
+@keyframes pulseBorder {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.97); /* vers l’intérieur */
+    opacity: 0.7;
+  }
 }
 </style>

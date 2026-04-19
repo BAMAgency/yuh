@@ -43,6 +43,10 @@ const props = defineProps({
     monthlyExpenses: {
         type: Number,
         default: 0
+    },
+    popupIndex: {
+        type: Number,
+        default: 0
     }
 })
 
@@ -428,7 +432,9 @@ const recommendationText = computed(() => {
     <div class="flex w-full flex-col gap-6 lg:flex-row lg:items-start">
         <div class="rounded-2xl border border-yuh-purple p-5 text-left">
             <div class="mb-4">
-                <h2 class="text-2xl font-semibold text-yuh-black">Recommended monthly allocation</h2>
+                <h2 class="text-2xl font-semibold text-yuh-black" :class="props.popupIndex === 2 ? 'animate-bounce' : ''">
+                    Recommended monthly allocation
+                </h2>
                 <p class="text-sm font-medium text-yuh-black/70">
                     Suggested breakdown of your monthly amount left after expenses
                 </p>
@@ -524,7 +530,7 @@ const recommendationText = computed(() => {
 
         <div v-if="allocationAmounts.investing > 0" class="rounded-2xl border border-yuh-purple p-5 text-left">
             <div class="mb-4">
-                <h2 class="text-2xl font-semibold text-yuh-black">Suggested investment mix</h2>
+                <h2 class="text-2xl font-semibold text-yuh-black"  :class="props.popupIndex === 3 ? 'animate-bounce' : ''">Suggested investment mix</h2>
                 <p class="text-sm font-medium text-yuh-black/70">
                     Breakdown of the investing portion based on the selected risk level
                 </p>
