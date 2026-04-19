@@ -29,6 +29,8 @@ const safeCurrentInvestment = computed(() => Number(props.currentInvestment) || 
 const safeSave = computed(() => Number(props.save) || 0)
 
 const popupIndex = ref(0);
+const yuhliaChatbotIconPath = `${import.meta.env.BASE_URL}assets/yuhlia.svg`
+const yuhliaEntirePath = `${import.meta.env.BASE_URL}assets/yuhlia-entire.svg`
 
 const totalExpenses = computed(() =>
     (props.expenses || []).reduce((total, expense) => total + (Number(expense.amount) || 0), 0)

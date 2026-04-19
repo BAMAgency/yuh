@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { ChevronDown } from 'lucide-vue-next'
 
-const logoPath = '/assets/Yuh_Logo_Single_Black_RGB.svg'
+const logoPath = `${import.meta.env.BASE_URL}assets/Yuh_Logo_Single_Black_RGB.svg`
 
 const isMenuOpen = ref(false)
 
