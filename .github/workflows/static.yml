@@ -36,7 +36,7 @@ jobs:
 
       - name: Build
         env:
-          VITE_BASE_PATH: /yuh/
+          VITE_BASE_PATH: /
         run: npm run build
 
       - name: Setup Pages
