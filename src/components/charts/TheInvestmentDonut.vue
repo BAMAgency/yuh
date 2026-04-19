@@ -46,8 +46,8 @@ const props = defineProps({
     }
 })
 
-const pimentPath = '/assets/piment.svg'
-const pimentBlankPath = '/assets/piment_blank.svg'
+const pimentPath = `${import.meta.env.BASE_URL}assets/piment.svg`
+const pimentBlankPath = `${import.meta.env.BASE_URL}assets/piment_blank.svg`
 
 const riskPimentLevels = {
     Mild: 1,

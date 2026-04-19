@@ -17,7 +17,7 @@ onMounted(() => {
   <div class="relative min-h-screen overflow-x-hidden">
     <img
       class="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-100"
-      src="/assets/Background_Abstract_03.svg"
+      :src="`${import.meta.env.BASE_URL}assets/Background_Abstract_03.svg`"
       alt="Background image"
     />
 
