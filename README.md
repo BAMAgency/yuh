@@ -1,25 +1,41 @@
-# yuh_calculator
+# Yuh Investment Advisor
 
-This template should help get you started developing with Vue 3 in Vite.
+This project was developed as a third-year project for the financial application Yuh.  
+It is a calculator that recommends investment allocations for users, with Yuh branding.
 
-## Recommended IDE Setup
+## Demonstration
+You can try the online version here: [go to the website](https://www.bam-agency.ch)
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Features
 
-## Recommended Browser Setup
+1. The user answers a few basic questions about their financial situation  
+2. The user answers questions about their objectives, investment horizon, and risk level they are willing to take  
+3. The user provides details about their monthly expenses  
+4. A recommendation dashboard is then displayed:
+   - **Remaining amount**: how much money the user has left at the end of the month. Expense proportions are displayed in a chart  
+   - **Recommended monthly allocation**: how the user can use the remaining amount  
+   - **Recommended mix**: based on their risk profile and objectives, how the user could invest  
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Promotional Aspect
 
-## Customize configuration
+This page has a strong promotional purpose. It is meant to be free while promoting Yuh and encouraging users to open an account.
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+It includes:
+- Dedicated CTAs  
+- A presentation of Yuhlia, the personal AI assistant, highlighting in-app functionalities  
+- A dedicated section promoting Yuh  
+
+## Technologies
+
+- Vite 
+- Vue.js
+- Tailwind CSS
+- Chart.js 
+
 
 ## Project Setup
+
+This application is front-end only. 
 
 ```sh
 npm install
