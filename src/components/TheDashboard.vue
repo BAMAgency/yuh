@@ -45,6 +45,14 @@ const getLeftAmount = () => {
     return leftAmount.value
 }
 
+const leftAmountPercentage = computed(() => {
+    if (safeIncome.value <= 0) {
+        return 0
+    }
+
+    return Math.round((leftAmount.value / safeIncome.value) * 100)
+})
+
 const monthSecurityAmount = computed(() => {
     const monthlyExpenses = totalExpenses.value
     if (monthlyExpenses <= 0) {
@@ -128,15 +136,15 @@ const financialHealth = computed(() => {
     <div class="flex flex-col gap-4 items-center">
 
         <h1 class="font-bold text-4xl text-yuh-black">
-            Your financial recommendations
+            Example allocation based on your profile
         </h1>
         <p class="font-medium mb-6">
-            Here are your personalized financial recommendations based on your income and expenses.
+            Example allocation based on a profile similar to yours
         </p>
         <div class="flex w-full justify-end ">
             <div
                 class="flex flex-row items-center gap-2 font-bold text-yuh-orange hover:underline p-2 rounded-xl hover:cursor-pointer text-xs">
-                <Download /> Export my recommendations
+                <Download /> Export
             </div>
         </div>
 
@@ -146,11 +154,12 @@ const financialHealth = computed(() => {
             class="relative overflow-visible w-full lg:min-w-xl flex flex-col gap-4 rounded-xl border border-yuh-purple p-4 text-left">
 
             <!-- popup 1 -->
-            <div v-if="popupIndex === 0" class="yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 lg:left-0 lg:top-0 lg:-translate-y-1/2 lg:-translate-x-1/2">
+            <div v-if="popupIndex === 0"
+                class="yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 lg:left-0 lg:top-0 lg:-translate-y-1/2 lg:-translate-x-1/2">
                 <div
                     class="yuhlia-soft-bounce shadow-2xl bg-yuh-orange text-white p-2 rounded-2xl max-w-sm flex flex-row items-center">
-                    <img class="h-40 w-40 md:h-80 md:w-80  -translate-x-5 translate-y-10" src="/assets/yuhlia-entire.svg"
-                        alt="Yuhlia" />
+                    <img class="h-40 w-40 md:h-80 md:w-80  -translate-x-5 translate-y-10"
+                        src="/assets/yuhlia-entire.svg" alt="Yuhlia" />
                     <button @click="popupIndex = 12"
                         class="text-white absolute top-2 left-2 rounded-full  w-6 h-6 flex items-center justify-center">
                         X
@@ -171,9 +180,10 @@ const financialHealth = computed(() => {
 
 
             <div id="left-amount-details" class="grid items-center gap-4 md:grid-cols-[auto_1fr]">
-                <div class="relative inline-flex items-center justify-center" :class="popupIndex === 1 ? 'animate-bounce' : 'z-10'">
+                <div class="relative inline-flex items-center justify-center"
+                    :class="popupIndex === 1 ? 'animate-bounce' : 'z-10'">
                     <p class="relative z-10 text-4xl font-bold leading-none text-yuh-violet md:text-5xl">
-                        {{ getLeftAmount() }} CHF
+                        {{ leftAmountPercentage }}%
                     </p>
                 </div>
 
@@ -187,9 +197,9 @@ const financialHealth = computed(() => {
             </div>
 
             <!-- popup 2 -->
-            <div v-if="popupIndex === 1" class="shadow-2xl yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 lg:left-0 lg:top-0 lg:translate-y-40 lg:translate-x-20">
-                <div
-                    class=" bg-yuh-orange text-white p-2 rounded-2xl max-w-xs flex flex-row items-center">
+            <div v-if="popupIndex === 1"
+                class="shadow-2xl yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 lg:left-0 lg:top-0 lg:translate-y-40 lg:translate-x-20">
+                <div class=" bg-yuh-orange text-white p-2 rounded-2xl max-w-xs flex flex-row items-center">
                     <button @click="popupIndex = 12"
                         class="text-white absolute top-2 left-2 rounded-full  w-6 h-6 flex items-center justify-center ">
                         X
@@ -217,19 +227,21 @@ const financialHealth = computed(() => {
                 </button>
             </div>
 
-             <!-- popup 3 -->
-            <div v-if="popupIndex === 2" class="shadow-2xl yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 lg:left-0 lg:top-0 lg:translate-y-40 lg:translate-x-90">
-                <div
-                    class=" bg-yuh-orange text-white p-2 rounded-2xl max-w-xs flex flex-row items-center">
+            <!-- popup 3 -->
+            <div v-if="popupIndex === 2"
+                class="shadow-2xl yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 lg:left-0 lg:top-0 lg:translate-y-40 lg:translate-x-90">
+                <div class=" bg-yuh-orange text-white p-2 rounded-2xl max-w-xs flex flex-row items-center">
                     <button @click="popupIndex = 12"
                         class="text-white absolute top-2 left-2 rounded-full  w-6 h-6 flex items-center justify-center ">
                         X
                     </button>
                     <div class="flex flex-col items-center gap-6 mx-2">
                         <h2 class="font-medium text-sm">3/5</h2>
-                        <h1 class="text-xl font-bold">Your Recommended monthly allocation</h1>
+                        <h1 class="text-xl font-bold">Example allocation based on your inputs </h1>
                         <p class="font-medium text-center">
-                           What do you do with that left amount? Here is our recommendation on how to allocate it each month based on your financial situation and goals.
+                            This is an example of how someone with a similar financial situation
+                            and goals might consider allocating their remaining amount.
+                            <strong>This is not personalized advice.</strong>
                         </p>
                         <button
                             class="mb-2 flex flex-row items-center text-black bg-white rounded-2xl text-orange-yuh px-4 py-2 font-bold transition-colors  hover:cursor-pointer"
@@ -241,20 +253,22 @@ const financialHealth = computed(() => {
                 </div>
             </div>
 
-             <!-- popup 4 -->
-            <div v-if="popupIndex === 3" class="shadow-2xl yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 lg:left-0 lg:top-0 lg:translate-y-40 ">
-                <div
-                    class=" bg-yuh-orange text-white p-2 rounded-2xl max-w-xs flex flex-row items-center">
+            <!-- popup 4 -->
+            <div v-if="popupIndex === 3"
+                class="shadow-2xl yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 lg:left-0 lg:top-0 lg:translate-y-40 ">
+                <div class=" bg-yuh-orange text-white p-2 rounded-2xl max-w-xs flex flex-row items-center">
                     <button @click="popupIndex = 12"
                         class="text-white absolute top-2 left-2 rounded-full  w-6 h-6 flex items-center justify-center ">
                         X
                     </button>
                     <div class="flex flex-col items-center gap-6 mx-2">
                         <h2 class="font-medium text-sm">4/5</h2>
-                        <h1 class="text-xl font-bold">Suggested Allocation Mix</h1>
+                        <h1 class="text-xl font-bold">Example Allocation Mix</h1>
                         <p class="font-medium text-center">
-                         Based on your horizon, risk level, and financial situation, we suggest a mix of investments that can help you grow your wealth while managing risk. 
-                         </p>
+                            Based on similar profiles (investment horizon, risk tolerance, financial
+                            situation), here's an example of how investors like you typically
+                            allocate their investments.
+                        </p>
                         <button
                             class="mb-2 flex flex-row items-center text-black bg-white rounded-2xl text-orange-yuh px-4 py-2 font-bold transition-colors  hover:cursor-pointer"
                             @click="popupIndex++">
@@ -264,7 +278,8 @@ const financialHealth = computed(() => {
                     </div>
                 </div>
             </div>
-            <div v-if="popupIndex === 4" class="shadow-2xl yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 ">
+            <div v-if="popupIndex === 4"
+                class="shadow-2xl yuhlia-greeting absolute z-20 left-1/2 top-4 -translate-x-1/2 ">
                 <div
                     class="yuhlia-soft-bounce bg-yuh-orange text-white p-2 rounded-2xl max-w-xs lg:max-w-lg flex flex-row items-center">
                     <img class="h-40 w-40 md:h-80 md:w-80 -translate-x-5 translate-y-10" src="/assets/yuhlia-entire.svg"
@@ -276,11 +291,13 @@ const financialHealth = computed(() => {
                     <div class="flex flex-col items-center gap-6 mx-2">
 
                         <h2 class="font-medium text-sm">5/5</h2>
-                        
+
                         <h1 class="text-xl font-bold text-center">Want to bring all that to life?</h1>
                         <p class="font-medium text-center">
-                            With your Yuh account, you can easily implement these recommendations and start your investment journey in just a few clicks. I will be here to guide you if you need any help along the way!
-                         </p>
+                            With your Yuh account, you can easily implement these recommendations and start your
+                            investment journey in just a few clicks. I will be here to guide you if you need any help
+                            along the way!
+                        </p>
                         <button
                             class="mb-2 flex flex-row items-center text-black bg-white rounded-2xl text-orange-yuh px-4 py-2 font-bold transition-colors  hover:cursor-pointer"
                             @click="popupIndex++">
@@ -291,7 +308,7 @@ const financialHealth = computed(() => {
                 </div>
             </div>
             <div v-show="isOpen">
-                <TheExpensesDonut :expenses="expenses" :income="income" :popupIndex="popupIndex"/>
+                <TheExpensesDonut :expenses="expenses" :income="income" :popupIndex="popupIndex" />
             </div>
         </div>
 
@@ -344,11 +361,8 @@ const financialHealth = computed(() => {
 
         <!--The investment recommandations chart-->
         <TheInvestmentDonut :left="leftAmount" :debt="debt" :riskLevel="riskLevel" :objective="objective"
-            :horizon="horizon" :highInterestDebt="highInterestDebt" :save="save" :monthlyExpenses="totalExpenses" :popupIndex="popupIndex"/>
-        <div class="font-medium text-sm">
-            <p>This is for informational purposes only. Yuh takes no responsibility for any financial decisions you make
-                based on these recommendations.</p>
-        </div>
+            :horizon="horizon" :highInterestDebt="highInterestDebt" :save="save" :monthlyExpenses="totalExpenses"
+            :popupIndex="popupIndex" />
     </div>
 </template>
 
@@ -380,28 +394,34 @@ const financialHealth = computed(() => {
 }
 
 .bounce-border {
-  position: relative;
+    position: relative;
 }
 
 .bounce-border::before {
-  content: "";
-  position: absolute;
-  inset: 0; /* même taille */
-  border-radius: inherit;
-  border: 4px solid #ff7a00; /* ton orange */
-  pointer-events: none;
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* même taille */
+    border-radius: inherit;
+    border: 4px solid #ff7a00;
+    /* ton orange */
+    pointer-events: none;
 
-  animation: pulseBorder 1s infinite;
+    animation: pulseBorder 1s infinite;
 }
 
 @keyframes pulseBorder {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(0.97); /* vers l’intérieur */
-    opacity: 0.7;
-  }
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(0.97);
+        /* vers l’intérieur */
+        opacity: 0.7;
+    }
 }
 </style>
