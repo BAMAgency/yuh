@@ -133,6 +133,7 @@ function goNext() {
       <TheDashboard :age="ageInput" :income="incomeInput" :currentInvestment="currentInvestment" :debt="debt"
         :objective="objective" :horizon="horizon" :riskLevel="riskLevel" :expenses="expenses" :save="save"
         :highInterestDebt="highInterestDebt" />
+
     </div>
 
     <!-- Navigation buttons -->
@@ -151,6 +152,19 @@ function goNext() {
         </div>
       </button>
     </div>
+
+
+
+  </div>
+  <div v-if="index == 5">
+    <h1 class="text-4xl">Welcome to Yuh!</h1>
+    <p>Your financial future is just a few steps away!</p>
+
+    <ul>
+      <li>The swiss financial application</li>
+      <li>a</li>
+      <li>Get personalized investment advice</li>
+    </ul>
 
   </div>
 </template>
