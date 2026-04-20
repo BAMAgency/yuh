@@ -13,6 +13,8 @@ import InfoTooltipButton from './core/InfoTooltipButton.vue'
 import { ChevronLeft } from 'lucide-vue-next'
 import { ChevronRight } from 'lucide-vue-next'
 
+const investPath = `${import.meta.env.BASE_URL}assets/invest.png`
+
 
 const index = ref(0);
 const ageInput = ref(25);
@@ -156,15 +158,45 @@ function goNext() {
 
 
   </div>
-  <div v-if="index == 5">
-    <h1 class="text-4xl">Welcome to Yuh!</h1>
-    <p>Your financial future is just a few steps away!</p>
+  <div v-if="index == 5" class="flex flex-col justify-center gap-6 p-4">
+    <h1 class="text-6xl">With Yuh, investment is simple.</h1>
 
-    <ul>
-      <li>The swiss financial application</li>
-      <li>a</li>
-      <li>Get personalized investment advice</li>
-    </ul>
+    <div>
+      <p class="text-2xl text-left">Your financial future is just a few steps away!</p>
+      <p class="text-lg font-medium">Yuh is a swiss financial application that makes investing accessible to everyone.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 grid-cols-1 items-center">
+      <img :src="investPath" alt="Why Yuh?" class="h-full lg:-translate-x-1/4" />
+      <div class="align-left flex flex-col gap-6">
+        <div class="flex flex-col gap-4">
+          <h2 class="text-4xl text-yuh-purple text-left">Why choose Yuh?</h2>
+          <ul class="list-disc font-medium text-left text-base flex flex-col gap-4">
+            <li>Easy access to investment products</li>
+            <li>0 trading fee ETFs</li>
+            <li>Trade in fractions</li>
+            <li>Recurring auto-investments</li>
+          </ul>
+        </div>
+        <div class="mb-6">
+          <h3 class="text-2xl font-bold text-yuh-rose mb-4">And so much more</h3>
+          <p class="text-base font-medium text-left">Yuh also offers a wide range of features to help you manage your
+            finances
+            and reach your goals, including saving tools, secure online payment processing, and more.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-6 mb-34 items-center">
+      <h2 class="text-4xl">Try it for free now !</h2>
+      <p class="text-lg font-medium text-left">Join thousands of satisfied users and start your investment journey with
+        Yuh today</p>
+      <button
+        class="bg-yuh-orange w-min text-white rounded-full pl-12 pr-12 p-2 hover:bg-yuh-orange/90 hover:cursor-pointer">
+        Get started
+      </button>
+    </div>
 
   </div>
 </template>
