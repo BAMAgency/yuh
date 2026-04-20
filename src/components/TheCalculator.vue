@@ -155,6 +155,14 @@ function goNext() {
       </button>
     </div>
 
+    <!--Disclaimer-->
+    <div class="text-xs text-yuh-black/70 mt-4">
+      <p>Disclaimer: This calculator provides general financial guidance based on the information you provide. It is not
+        a substitute for personalized advice from a qualified financial advisor. The results are estimates and may not
+        reflect actual outcomes. Always consider your individual circumstances and consult with a professional before
+        making any financial decisions.</p>
+    </div>
+
 
 
   </div>
@@ -199,4 +207,11 @@ function goNext() {
     </div>
 
   </div>
+
+  <div class="text-sm text-yuh-black mt-4 mb-4 text-center">
+    Academic project HEIG-VD x Yuh.
+    This is a student prototype. Recommendations are
+    theoretical and do not constitute financial advice.
+    Visit www.yuh.com for official services.
+</div>
 </template>

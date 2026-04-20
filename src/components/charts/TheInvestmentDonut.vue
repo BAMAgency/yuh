@@ -95,6 +95,16 @@ const emergencyFundGap = computed(() => {
     return Math.max(targetAmount - safeSavings.value, 0)
 })
 
+const emergencyFundProgressPercentage = computed(() => {
+    const targetAmount = recommendedSafetyMonths.value * safeMonthlyExpenses.value
+
+    if (targetAmount <= 0) {
+        return 0
+    }
+
+    return Math.round((safeSavings.value / targetAmount) * 100)
+})
+
 const investmentProfiles = {
     Mild: {
         equities: 20,
@@ -347,7 +357,7 @@ const mainChartData = computed(() => ({
     labels: mainLegendItems.value.map((item) => item.label),
     datasets: [
         {
-            data: mainLegendItems.value.map((item) => item.amount),
+            data: mainLegendItems.value.map((item) => item.percentage),
             backgroundColor: mainLegendItems.value.map((item) => item.color),
             borderWidth: 0
         }
@@ -377,7 +387,7 @@ const chartOptions = {
             callbacks: {
                 label(context) {
                     const value = context.raw || 0
-                    return `${context.label}: CHF ${Number(value).toLocaleString()}`
+                    return `${context.label}: ${value}%`
                 }
             }
         }
@@ -432,11 +442,12 @@ const recommendationText = computed(() => {
     <div class="flex w-full flex-col gap-6 lg:flex-row lg:items-start">
         <div class="rounded-2xl border border-yuh-purple p-5 text-left">
             <div class="mb-4">
-                <h2 class="text-2xl font-semibold text-yuh-black" :class="props.popupIndex === 2 ? 'animate-bounce' : ''">
-                    Recommended monthly allocation
+                <h2 class="text-2xl font-semibold text-yuh-black"
+                    :class="props.popupIndex === 2 ? 'animate-bounce' : ''">
+                    Example allocation based on your inputs
                 </h2>
                 <p class="text-sm font-medium text-yuh-black/70">
-                    Suggested breakdown of your monthly amount left after expenses
+                    Sample portfolio based on your profile
                 </p>
             </div>
 
@@ -453,71 +464,70 @@ const recommendationText = computed(() => {
                                     :style="{ backgroundColor: item.color }"></span>
                                 <span class="text-yuh-black">{{ item.label }}</span>
                             </div>
-                            <span class="font-medium text-yuh-black/80">CHF {{ item.amount.toLocaleString() }} ({{
-                                item.percentage }}%)</span>
+                            <span class="font-medium text-yuh-black/80">{{ item.percentage }}%</span>
                         </li>
                     </ul>
                 </div>
+                <div class="text-sm font-medium">These are generic examples for educational purposes,
+                    not personalized recommendations for your situation.</div>
 
                 <div id="allocation-details" class="flex flex-col gap-4">
                     <div class="grid gap-3 sm:grid-cols-2">
                         <div class="rounded-xl bg-yuh-pale-violet p-4">
                             <p class="text-sm font-medium text-yuh-black/70">Debt repayment</p>
-                            <p class="text-2xl font-bold text-yuh-black">{{ allocationAmounts.debtRepayment }} CHF</p>
-                            <p class="text-sm text-yuh-black/70">{{ allocationPercentages.debtRepayment }}%</p>
+                            <p class="text-2xl font-bold text-yuh-black">{{ allocationPercentages.debtRepayment }}%</p>
                         </div>
 
                         <div class="rounded-xl bg-yuh-pale-violet p-4">
                             <p class="text-sm font-medium text-yuh-black/70">Emergency fund</p>
-                            <p class="text-2xl font-bold text-yuh-black">{{ allocationAmounts.emergencySavings }} CHF
+                            <p class="text-2xl font-bold text-yuh-black">{{ allocationPercentages.emergencySavings }}%
                             </p>
-                            <p class="text-sm text-yuh-black/70">{{ allocationPercentages.emergencySavings }}%</p>
                         </div>
 
                         <div class="rounded-xl bg-yuh-pale-violet p-4">
                             <p class="text-sm font-medium text-yuh-black/70">Goal savings</p>
-                            <p class="text-2xl font-bold text-yuh-black">{{ allocationAmounts.goalSavings }} CHF</p>
-                            <p class="text-sm text-yuh-black/70">{{ allocationPercentages.goalSavings }}%</p>
+                            <p class="text-2xl font-bold text-yuh-black">{{ allocationPercentages.goalSavings }}%</p>
                         </div>
 
                         <div class="rounded-xl bg-yuh-pale-violet p-4">
                             <p class="text-sm font-medium text-yuh-black/70">Investing</p>
-                            <p class="text-2xl font-bold text-yuh-black">{{ allocationAmounts.investing }} CHF</p>
-                            <p class="text-sm text-yuh-black/70">{{ allocationPercentages.investing }}%</p>
+                            <p class="text-2xl font-bold text-yuh-black">{{ allocationPercentages.investing }}%</p>
                         </div>
                     </div>
 
                     <div>
                         <button @click="isAssetmentInfoOpen = !isAssetmentInfoOpen"
                             class="text-sm text-yuh-orange hover:text-yuh-black transition-colors mb-2">
-                            {{ isAssetmentInfoOpen ? '- Show less' : '+ Why this split?' }}
+                            {{ isAssetmentInfoOpen ? '- Show less' : '+ Understanding this allocation strategy' }}
                         </button>
                     </div>
                     <div v-if="isAssetmentInfoOpen">
                         <div class="rounded-xl border border-yuh-pale-violet p-4">
-                        <p class="text-base font-semibold text-yuh-black">Why this split?</p>
-                        <p class="mt-2 text-sm font-medium text-yuh-black/70">
-                            {{ recommendationText }}
-                        </p>
-                    </div>
+                            <p class="text-base font-semibold text-yuh-black">Understanding this allocation strategy</p>
+                            <p class="mt-2 text-sm font-medium text-yuh-black/70">
+                                Here is an example allocation based on the information you provided. This is a generic
+                                simulation and does not constitute personalized advice.
+                            </p>
+                        </div>
 
-                    <div v-if="isAssetmentInfoOpen" class="rounded-xl border border-yuh-pale-violet p-4">
-                        <p class="text-base font-semibold text-yuh-black">Emergency savings status</p>
-                        <div class="mt-3 grid gap-3 sm:grid-cols-3">
-                            <div>
-                                <p class="text-sm font-medium text-yuh-black/70">Current savings</p>
-                                <p class="text-xl font-bold text-yuh-black">{{ save }} CHF</p>
-                            </div>
-                            <div>
-                                <p class="text-sm font-medium text-yuh-black/70">Months covered</p>
-                                <p class="text-xl font-bold text-yuh-black">{{ monthsOfSafety.toFixed(1) }}</p>
-                            </div>
-                            <div>
-                                <p class="text-sm font-medium text-yuh-black/70">Recommended target</p>
-                                <p class="text-xl font-bold text-yuh-black">{{ recommendedSafetyMonths }} months</p>
+                        <div v-if="isAssetmentInfoOpen" class="rounded-xl border border-yuh-pale-violet p-4">
+                            <p class="text-base font-semibold text-yuh-black">Emergency savings status</p>
+                            <div class="mt-3 grid gap-3 sm:grid-cols-3">
+                                <div>
+                                    <p class="text-sm font-medium text-yuh-black/70">Progress to target</p>
+                                    <p class="text-xl font-bold text-yuh-black">{{ emergencyFundProgressPercentage }}%
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-yuh-black/70">Months covered</p>
+                                    <p class="text-xl font-bold text-yuh-black">{{ monthsOfSafety.toFixed(1) }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-yuh-black/70">Recommended target</p>
+                                    <p class="text-xl font-bold text-yuh-black">{{ recommendedSafetyMonths }} months</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -530,7 +540,9 @@ const recommendationText = computed(() => {
 
         <div v-if="allocationAmounts.investing > 0" class="rounded-2xl border border-yuh-purple p-5 text-left">
             <div class="mb-4">
-                <h2 class="text-2xl font-semibold text-yuh-black"  :class="props.popupIndex === 3 ? 'animate-bounce' : ''">Suggested investment mix</h2>
+                <h2 class="text-2xl font-semibold text-yuh-black"
+                    :class="props.popupIndex === 3 ? 'animate-bounce' : ''"> How {{ riskLevel }} Investors typically
+                    allocate</h2>
                 <p class="text-sm font-medium text-yuh-black/70">
                     Breakdown of the investing portion based on the selected risk level
                 </p>
@@ -569,8 +581,7 @@ const recommendationText = computed(() => {
                                     :style="{ backgroundColor: item.color }"></span>
                                 <span class="text-yuh-black">{{ item.label }}</span>
                             </div>
-                            <span class="font-medium text-yuh-black/80">{{ item.percentage }}% · CHF {{
-                                item.amount.toLocaleString() }}</span>
+                            <span class="font-medium text-yuh-black/80">{{ item.percentage }}%</span>
                         </li>
                     </ul>
                 </div>
@@ -578,35 +589,28 @@ const recommendationText = computed(() => {
                 <div id="investment-allocation-details" class="flex flex-col gap-4">
                     <div class="rounded-xl bg-yuh-pale-violet p-4">
                         <p class="text-sm font-medium text-yuh-black/70">Monthly amount to invest</p>
-                        <p class="text-2xl font-bold text-yuh-black">{{ allocationAmounts.investing }} CHF</p>
+                        <p class="text-2xl font-bold text-yuh-black">{{ allocationPercentages.investing }}%</p>
                     </div>
 
                     <div class="grid gap-3 sm:grid-cols-2">
                         <div class="rounded-xl bg-yuh-pale-violet p-4">
                             <p class="text-sm font-medium text-yuh-black/70">Equities</p>
-                            <p class="text-2xl font-bold text-yuh-black">CHF {{
-                                investmentBreakdownAmounts.equities.toLocaleString() }}</p>
-                            <p class="text-sm text-yuh-black/70">{{ selectedInvestmentProfile.equities }}%</p>
+                            <p class="text-2xl font-bold text-yuh-black">{{ selectedInvestmentProfile.equities }}%</p>
                         </div>
                         <div class="rounded-xl bg-yuh-pale-violet p-4">
                             <p class="text-sm font-medium text-yuh-black/70">Bonds</p>
-                            <p class="text-2xl font-bold text-yuh-black">CHF {{
-                                investmentBreakdownAmounts.bonds.toLocaleString() }}</p>
-                            <p class="text-sm text-yuh-black/70">{{ selectedInvestmentProfile.bonds }}%</p>
+                            <p class="text-2xl font-bold text-yuh-black">{{ selectedInvestmentProfile.bonds }}%</p>
                         </div>
 
                         <div class="rounded-xl bg-yuh-pale-violet p-4">
                             <p class="text-sm font-medium text-yuh-black/70">Alternatives</p>
-                            <p class="text-2xl font-bold text-yuh-black">CHF {{
-                                investmentBreakdownAmounts.alternatives.toLocaleString() }}</p>
-                            <p class="text-sm text-yuh-black/70">{{ selectedInvestmentProfile.alternatives }}%</p>
+                            <p class="text-2xl font-bold text-yuh-black">{{ selectedInvestmentProfile.alternatives }}%
+                            </p>
                         </div>
 
                         <div class="rounded-xl bg-yuh-pale-violet p-4">
                             <p class="text-sm font-medium text-yuh-black/70">Cash</p>
-                            <p class="text-2xl font-bold text-yuh-black">CHF {{
-                                investmentBreakdownAmounts.cash.toLocaleString() }}</p>
-                            <p class="text-sm text-yuh-black/70">{{ selectedInvestmentProfile.cash }}%</p>
+                            <p class="text-2xl font-bold text-yuh-black">{{ selectedInvestmentProfile.cash }}%</p>
                         </div>
                     </div>
 
