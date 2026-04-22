@@ -66,7 +66,12 @@ It includes:
 - Vite 
 - Vue.js
 - Tailwind CSS
-- Chart.js 
+- Chart.js
+  
+### Why this choice ?
+As this project is frontend-only, a light, modern, and easy-to-use framework like Vue.js was the right choice. 
+Tailwind CSS was chosen for its simplicity, as well as its built-in responsiveness, making it a modern and efficient tool. 
+Chart.js is a simple way to create charts and is well-maintained and modern.
 
 ## Project Setup
 
