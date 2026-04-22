@@ -5,6 +5,7 @@ import TheInvestmentDonut from './charts/TheInvestmentDonut.vue'
 import { Download } from 'lucide-vue-next';
 import { ChevronRight } from 'lucide-vue-next';
 import { ArrowBigDown } from 'lucide-vue-next';
+import LearnMoreInvest from './learnmoreSections/LearnMoreInvest.vue'
 
 const props = defineProps({
     age: Number,
@@ -134,19 +135,16 @@ const financialHealth = computed(() => {
     </div>
 
     <div class="flex flex-col gap-4 items-center">
-
-        <h1 class="font-bold text-4xl text-yuh-black">
-            Example allocation based on your profile
-        </h1>
-        <p class="font-medium mb-6">
-            Example allocation based on a profile similar to yours
-        </p>
         <div class="flex w-full justify-end ">
             <div
                 class="flex flex-row items-center gap-2 font-bold text-yuh-orange hover:underline p-2 rounded-xl hover:cursor-pointer text-xs">
                 <Download /> Export
             </div>
         </div>
+
+         <h1 class="font-bold text-4xl text-yuh-black mt-4 mb-4">
+                Your mensual budget
+            </h1>
 
 
         <!-- Left Amount -->
@@ -177,13 +175,12 @@ const financialHealth = computed(() => {
                 </div>
             </div>
 
-
-
+           
             <div id="left-amount-details" class="grid items-center gap-4 md:grid-cols-[auto_1fr]">
                 <div class="relative inline-flex items-center justify-center"
                     :class="popupIndex === 1 ? 'animate-bounce' : 'z-10'">
                     <p class="relative z-10 text-4xl font-bold leading-none text-yuh-violet md:text-5xl">
-                        {{ leftAmountPercentage }}%
+                        {{ leftAmount }}
                     </p>
                 </div>
 
@@ -358,11 +355,16 @@ const financialHealth = computed(() => {
                     well-being by evaluating key aspects of your financial situation.</p>
             </div>
         </div>-->
-
+        <h1 class="font-bold text-xl text-yuh-black mt-4 mb-4">
+             Allocation exemple
+        </h1>
         <!--The investment recommandations chart-->
         <TheInvestmentDonut :left="leftAmount" :debt="debt" :riskLevel="riskLevel" :objective="objective"
             :horizon="horizon" :highInterestDebt="highInterestDebt" :save="save" :monthlyExpenses="totalExpenses"
-            :popupIndex="popupIndex" />
+            :popupIndex="popupIndex" class="mb-4" />
+
+        <LearnMoreInvest />
+
     </div>
 </template>
 
