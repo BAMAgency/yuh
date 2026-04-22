@@ -60,7 +60,7 @@ function goNext() {
 
       <div class="mb-6 flex flex-col gap-2">
         <h1 class="text-2xl font-bold">Let's get started!</h1>
-        <p class="font-medium text-md">Answer a few questions about yourself to get personalized financial advice.</p>
+        <p class="font-medium text-md">Answer a few questions about yourself !</p>
       </div>
 
       <form action="" class="flex flex-col gap-8">

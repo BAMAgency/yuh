@@ -34,7 +34,7 @@ onMounted(() => {
           <div v-if="!isStarted"
             class="flex flex-col text-center items-center gap-4 md:text-xl lg:text-2xl text-lg pr-12 pl-12">
             Find out in 5 minutes with our calculator. <br />
-            Discover your budget, risk tolerance and investment horizon to get personalized recommendations.
+            Discover your budget and an introduction to investment with Yuh.
           </div>
         </div>
         <div v-if="!isStarted" class="mt-12">
