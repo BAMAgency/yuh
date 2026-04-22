@@ -16,7 +16,7 @@ You can try the online version here: [go to the website](https://www.bam-agency.
    - **Recommended monthly allocation**: how the user can use the remaining amount, examples  
    - **Recommended mix**: based on their risk profile and objectives, how the user could invest, examples
   
-## Architectures
+## Architecture
 
 ```text
 src
