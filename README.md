@@ -18,35 +18,39 @@ You can try the online version here: [go to the website](https://www.bam-agency.
   
 ## Architectures
 
-``
+```text
 src
-├── App.vue                          -> Root app component
+├── App.vue                         → Root app component
 ├── components
-│   ├── HorizonSelector.vue          -> Form's Horizon Selector 
-│   ├── RiskLevelSelector.vue        -> Form's Risk Selector 
-│   ├── TheCalculator.vue            -> The calculator main skeleton
-│   ├── TheDashboard.vue             -> The final dashboard component
-│   ├── TheExpenseSection.vue        -> Form's Expense section
-│   ├── TheExpensesSelector.vue      -> Form's Expense selector
-│   ├── YuhSelect.vue                -> Basic select component for forms
+│   ├── HorizonSelector.vue         → Form's Horizon Selector
+│   ├── RiskLevelSelector.vue       → Form's Risk Selector
+│   ├── TheCalculator.vue           → Main calculator structure
+│   ├── TheDashboard.vue            → Final dashboard component
+│   ├── TheExpenseSection.vue       → Form's expense section
+│   ├── TheExpensesSelector.vue     → Expense selector
+│   ├── YuhSelect.vue               → Basic select component
+│   │
 │   ├── charts
-│   │   ├── TheExpensesDonut.vue     -> Expense breakdown chart
-│   │   ├── TheInvestmentDonut.vue   -> Investment allocation charts
-│   │   └── TheSpeedometerChart.vue  -> Unused component (old version)
-│   ├── core                         -> Contains the core basic components
-│   │   ├── InfoTooltipButton.vue    
-│   │   ├── NavBar.vue              
-│   │   └── RangeSlider.vue          
-│   └── learnmoreSections            -> Contains the different Learn More sections
-│       ├── LearnMoreHorizon.vue   
+│   │   ├── TheExpensesDonut.vue    → Expense breakdown chart
+│   │   ├── TheInvestmentDonut.vue  → Investment allocation chart
+│   │   └── TheSpeedometerChart.vue → Deprecated (unused)
+│   │
+│   ├── core                        → Core reusable components
+│   │   ├── InfoTooltipButton.vue
+│   │   ├── NavBar.vue
+│   │   └── RangeSlider.vue
+│   │
+│   └── learnmoreSections           → "Learn More" sections
+│       ├── LearnMoreHorizon.vue
 │       ├── LearnMoreInvest.vue
 │       ├── LearnMoreObjective.vue
 │       ├── LearnMoreRiskLevel.vue
 │       └── YouTubeThumbnail.vue
-├── main.js                          -> App entry point
-└── style                             
-    └── style.css                    -> Contains custom css and tailwind variables
-``
+│
+├── main.js                         → App entry point
+└── style
+    └── style.css                   → Custom CSS & Tailwind variables
+```
 
 ## Promotional Aspect
 
