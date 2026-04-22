@@ -32,7 +32,6 @@ It includes:
 - Tailwind CSS
 - Chart.js 
 
-
 ## Project Setup
 
 This application is front-end only. 
@@ -58,4 +57,3 @@ npm run build
 ```sh
 npm run lint
 ```
-# yuh
