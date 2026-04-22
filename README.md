@@ -1,7 +1,7 @@
 # Budget Calculator and investment preview
 
 This project was developed as a third-year project for the financial application Yuh.  
-It is a calculator that recommends investment allocations for users, with Yuh branding.
+It is a educavive that introduce users to investment and budgeting. 
 
 ## Demonstration
 You can try the online version here: [go to the website](https://www.bam-agency.ch)
