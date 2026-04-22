@@ -20,6 +20,14 @@ let stopChartWatch = null
 const totalExpenses = computed(() =>
     (props.expenses || []).reduce((total, expense) => total + (Number(expense.amount) || 0), 0)
 )
+const safeIncome = computed(() => Math.max(Number(props.income) || 0, 0))
+const totalExpensesPercentage = computed(() => {
+    if (safeIncome.value <= 0) {
+        return 0
+    }
+
+    return Math.round((totalExpenses.value / safeIncome.value) * 100)
+})
 function formatCategory(category) {
     const text = String(category || '').replace(/_/g, ' ').trim()
     if (!text) {
@@ -96,7 +104,8 @@ function createChart() {
                     callbacks: {
                         label(context) {
                             const amount = Number(context.raw) || 0
-                            return `${context.label}: CHF ${amount.toLocaleString()}`
+                            const percentage = total.value > 0 ? Math.round((amount / total.value) * 100) : 0
+                            return `${context.label}: CHF ${amount.toLocaleString()} (${percentage}%)`
                         }
                     }
                 }
@@ -161,11 +170,13 @@ onBeforeUnmount(() => {
                             <p class="text-xs font-semibold uppercase tracking-wide text-yuh-black/60">Income</p>
                             <p class="text-base font-bold text-yuh-black">CHF {{ Number(income || 0).toLocaleString() }}
                             </p>
+                            <p class="text-xs text-yuh-black/70">100%</p>
                         </div>
                         <div class="rounded-md bg-yuh-pale-violet p-3 text-center">
                             <p class="text-xs font-semibold uppercase tracking-wide text-yuh-black/60">Total expenses</p>
                             <p class="text-base font-bold text-yuh-black">CHF {{ Number(totalExpenses || 0).toLocaleString() }}
                             </p>
+                            <p class="text-xs text-yuh-black/70">{{ totalExpensesPercentage }}% of income</p>
                         </div>
                     </div>
                 </div>
