@@ -17,6 +17,8 @@ You can try the online version here: [go to the website](https://www.bam-agency.
    - **Recommended mix**: based on their risk profile and objectives, how the user could invest, examples
   
 ## Architectures
+
+``
 src
 ├── App.vue                          -> Root app component
 ├── components
@@ -44,6 +46,7 @@ src
 ├── main.js                          -> App entry point
 └── style                             
     └── style.css                    -> Contains custom css and tailwind variables
+``
 
 ## Promotional Aspect
 
