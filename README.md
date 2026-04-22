@@ -1,4 +1,4 @@
-# Yuh Investment Advisor
+# Budget Calculator and investment preview
 
 This project was developed as a third-year project for the financial application Yuh.  
 It is a calculator that recommends investment allocations for users, with Yuh branding.
@@ -13,8 +13,37 @@ You can try the online version here: [go to the website](https://www.bam-agency.
 3. The user provides details about their monthly expenses  
 4. A recommendation dashboard is then displayed:
    - **Remaining amount**: how much money the user has left at the end of the month. Expense proportions are displayed in a chart  
-   - **Recommended monthly allocation**: how the user can use the remaining amount  
-   - **Recommended mix**: based on their risk profile and objectives, how the user could invest  
+   - **Recommended monthly allocation**: how the user can use the remaining amount, examples  
+   - **Recommended mix**: based on their risk profile and objectives, how the user could invest, examples
+  
+## Architectures
+src
+├── App.vue                          -> Root app component
+├── components
+│   ├── HorizonSelector.vue          -> Form's Horizon Selector 
+│   ├── RiskLevelSelector.vue        -> Form's Risk Selector 
+│   ├── TheCalculator.vue            -> The calculator main skeleton
+│   ├── TheDashboard.vue             -> The final dashboard component
+│   ├── TheExpenseSection.vue        -> Form's Expense section
+│   ├── TheExpensesSelector.vue      -> Form's Expense selector
+│   ├── YuhSelect.vue                -> Basic select component for forms
+│   ├── charts
+│   │   ├── TheExpensesDonut.vue     -> Expense breakdown chart
+│   │   ├── TheInvestmentDonut.vue   -> Investment allocation charts
+│   │   └── TheSpeedometerChart.vue  -> Unused component (old version)
+│   ├── core                         -> Contains the core basic components
+│   │   ├── InfoTooltipButton.vue    
+│   │   ├── NavBar.vue              
+│   │   └── RangeSlider.vue          
+│   └── learnmoreSections            -> Contains the different Learn More sections
+│       ├── LearnMoreHorizon.vue   
+│       ├── LearnMoreInvest.vue
+│       ├── LearnMoreObjective.vue
+│       ├── LearnMoreRiskLevel.vue
+│       └── YouTubeThumbnail.vue
+├── main.js                          -> App entry point
+└── style                             
+    └── style.css                    -> Contains custom css and tailwind variables
 
 ## Promotional Aspect
 
